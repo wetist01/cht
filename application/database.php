@@ -13,15 +13,15 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => '127.0.0.1',
+    'hostname'       => '5794c7541e0e6.sh.cdb.myqcloud.com',
     // 数据库名
-    'database'       => '',
+    'database'       => 'nothave',
     // 用户名
-    'username'       => 'root',
+    'username'       => 'cdb_outerroot',
     // 密码
-    'password'       => '',
+    'password'       => 'kongjian@2017',
     // 端口
-    'hostport'       => '',
+    'hostport'       => '7350',
     // 连接dsn
     'dsn'            => '',
     // 数据库连接参数
@@ -29,7 +29,7 @@ return [
     // 数据库编码默认采用utf8
     'charset'        => 'utf8',
     // 数据库表前缀
-    'prefix'         => '',
+    'prefix'         => 'nh_',
     // 数据库调试模式
     'debug'          => true,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
@@ -45,7 +45,7 @@ return [
     // 数据集返回类型 array 数组 collection Collection对象
     'resultset_type' => 'array',
     // 是否自动写入时间戳字段
-    'auto_timestamp' => false,
+    'auto_timestamp' => true,
     // 是否需要进行SQL性能分析
     'sql_explain'    => false,
 ];

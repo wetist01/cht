@@ -19,7 +19,7 @@ return [
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -43,7 +43,7 @@ return [
     // 是否开启多语言
     'lang_switch_on'         => false,
     // 默认全局过滤方法 用逗号分隔多个
-    'default_filter'         => '',
+    'default_filter'         => 'strip_tags,htmlspecialchars',
     // 默认语言
     'default_lang'           => 'zh-cn',
     // 应用类库后缀
@@ -105,7 +105,7 @@ return [
     // 默认的访问控制器层
     'url_controller_layer'   => 'controller',
     // 表单请求类型伪装变量
-    'var_method'             => '_method',
+    'var_method'             => '_m',
     // 表单ajax伪装变量
     'var_ajax'               => '_ajax',
     // 表单pjax伪装变量
@@ -183,15 +183,19 @@ return [
     // | 缓存设置
     // +----------------------------------------------------------------------
 
-    'cache'                  => [
+    'cache' => [
         // 驱动方式
-        'type'   => 'File',
-        // 缓存保存目录
-        'path'   => CACHE_PATH,
+        'type' => 'redis',
         // 缓存前缀
-        'prefix' => '',
+        'prefix' => 'nh_',
         // 缓存有效期 0表示永久缓存
-        'expire' => 0,
+        'expire' => 86400 * 30,
+        // redis 服务器
+        'host' => '120.25.103.10',
+        // 密码
+        'password'   => 'kongjian',
+        // redis 服务器端口
+        'port' => '6379'
     ],
 
     // +----------------------------------------------------------------------
@@ -203,11 +207,19 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'         => 'nothave',
         // 驱动方式 支持redis memcache memcached
-        'type'           => '',
+        'type'           => 'redis',
         // 是否自动开启 SESSION
         'auto_start'     => true,
+        //host
+        'host'       => '120.25.103.10',
+        // redis端口
+        'port'       => 6379,
+        // 密码
+        'password'   => 'kongjian',
+        //过期时间
+        'expire' => 3600,
     ],
 
     // +----------------------------------------------------------------------
@@ -215,7 +227,7 @@ return [
     // +----------------------------------------------------------------------
     'cookie'                 => [
         // cookie 名称前缀
-        'prefix'    => '',
+        'prefix'    => 'nh_',
         // cookie 保存时间
         'expire'    => 0,
         // cookie 保存路径
