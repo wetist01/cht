@@ -49,6 +49,8 @@ class User extends Base
                 } else {
                     data_format_json(-2, '', '验证码已过期');
                 }
+            } else {
+                data_format_json(-1, '', '参数错误');
             }
         }
     }
@@ -90,7 +92,7 @@ class User extends Base
                 'uid' => $uid,
                 'token' => $token
             ];
-            Db::table('nh_user')->where('uid',$uid)->setField('lastlogin_time',time());
+            Db::table('nh_user')->where('uid', $uid)->setField('lastlogin_time', time());
             $result = $data;
         } else {
             $result = '';
