@@ -13,9 +13,14 @@ class ComposerStaticInit6a6991f329bd9c8b236d5e48471ddd11
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
+            'think\\worker\\' => 13,
             'think\\helper\\' => 13,
             'think\\composer\\' => 15,
             'think\\' => 6,
+        ),
+        'W' => 
+        array (
+            'Workerman\\' => 10,
         ),
         'O' => 
         array (
@@ -24,6 +29,10 @@ class ComposerStaticInit6a6991f329bd9c8b236d5e48471ddd11
     );
 
     public static $prefixDirsPsr4 = array (
+        'think\\worker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-worker/src',
+        ),
         'think\\helper\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-helper/src',
@@ -36,6 +45,10 @@ class ComposerStaticInit6a6991f329bd9c8b236d5e48471ddd11
         array (
             0 => __DIR__ . '/..' . '/topthink/think-image/src',
             1 => __DIR__ . '/../..' . '/thinkphp/library/think',
+        ),
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
         ),
         'OSS\\' => 
         array (
