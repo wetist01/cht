@@ -6,10 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'think\\worker\\' => array($vendorDir . '/topthink/think-worker/src'),
     'think\\helper\\' => array($vendorDir . '/topthink/think-helper/src'),
     'think\\composer\\' => array($vendorDir . '/topthink/think-installer/src'),
     'think\\' => array($vendorDir . '/topthink/think-image/src', $baseDir . '/thinkphp/library/think'),
-    'Workerman\\' => array($vendorDir . '/workerman/workerman'),
     'OSS\\' => array($vendorDir . '/aliyuncs/oss-sdk-php/src/OSS'),
 );
