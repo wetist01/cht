@@ -26,3 +26,16 @@ function upload_file_oss($bucket, $object, $file)
         print $e->getMessage();
     }
 }
+
+//将坐标系x1000000取整数
+function encode_coordinate($data = ''){
+    if ($data && is_numeric($data)){
+        $result = round($data*1000000);
+    }else{
+        $result = null;
+    }
+    return $result;
+}
+
+
+
