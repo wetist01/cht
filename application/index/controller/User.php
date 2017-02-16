@@ -110,7 +110,7 @@ class User extends Base
     function getSmsCode()
     {
         $sms_code = rand_number(6);
-        $content = '您的验证码是' . $sms_code;
+        $content = '您的验证码是'.$sms_code.',有效期为5分钟,请尽快验证!';
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet()) {//TODO 上线后将或改为与
             $mobile = $request->param('mobile', '');

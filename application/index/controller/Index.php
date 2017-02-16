@@ -17,6 +17,7 @@ class Index extends Base
 
     public function index()
     {
+        Cache::get('hahah');
         return view('index');
     }
 
