@@ -17,9 +17,9 @@ return [
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -213,11 +213,11 @@ return [
         // 是否自动开启 SESSION
         'auto_start'     => true,
         //host
-        'host'       => '120.25.103.10',
+        'host'       => \think\Env::get('cache.host','120.25.103.10'),
         // redis端口
         'port'       => 6379,
         // 密码
-        'password'   => 'kongjian',
+        'password'   => 'jit2017!',
         //过期时间
         'expire' => 3600,
     ],
