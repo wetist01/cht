@@ -143,7 +143,7 @@ class User extends Base
             $file = 'uploads/head/' . $extension;
             if (upload_file_oss($bucket, $object, $file)) {
                 Db::table('nh_user')->where('uid', $uid)->setField('img_head', 'http://img.wetist.com/' . $object);
-                data_format_json(0, ['url' => 'http://img.wetist.com/' . $object], '上传成功');
+                data_format_json(0, ['head_url' => 'http://img.wetist.com/' . $object], '上传成功');
             }
         } else {
             echo $file->getError();
