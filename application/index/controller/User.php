@@ -24,7 +24,7 @@ class User extends Base
     function login()
     {
         $request = Request::instance();
-        if ($request->isAjax() || $request->isGet()) {//TODO 上线后改为and isPost
+        if ($request->isAjax() || $request->isGet() || $request->isPost()) {//TODO 上线后改为and isPost
             //验证验证码是否正确
             $mobile = $request->param('mobile', '');
             $sms_code = $request->param('sms_code', '');
