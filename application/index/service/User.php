@@ -12,8 +12,5 @@ namespace app\index\service;
 
 class User extends Base
 {
-    function test()
-    {
 
-    }
 }

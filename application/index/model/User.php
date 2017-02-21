@@ -15,15 +15,10 @@ class User extends Model
 {
     protected $pk = 'uid';
 
-    //获取用户信息
-    function get_member_info($fields = "*", $where = array(), $type = 0)
+    public function getSexAttr($value)
     {
-        if ($type == 0) {//查询单条信息
-            $result = $this->field($fields)->where($where)->find();
-        } else {//查询多条信息
-            $result = $this->field($fields)->where($where)->select();
-        }
-        return $result;
+        $sex= [0=>'保密',1=>'男',2=>'女'];
+        return $sex[$value];
     }
 
 }

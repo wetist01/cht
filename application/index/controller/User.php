@@ -16,7 +16,7 @@ class User extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = ['login', 'getsmscode'];//不需要token验证的action,小写
+        $token_allow = ['login', 'getsmscode', 'user_index_init'];//不需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -59,11 +59,16 @@ class User extends Base
     private function register($mobile = 0)
     {
         if ($mobile) {
+            //自动生成昵称
+            $name = '没有了' . rand_number(4) . substr($mobile, 7, 10);
+
+            //注册新用户
             $user = new \app\index\model\User();
             $user->data([
                 'mobile' => $mobile,
                 'create_time' => time(),
-                'update_time' => time()
+                'update_time' => time(),
+                'name' => $name
             ]);
             $user->save();
             $uid = $user->uid;
@@ -148,5 +153,23 @@ class User extends Base
         } else {
             echo $file->getError();
         }
+    }
+
+    //个人中心首页初始化获取相关参数 TODO 上线后增加isAjax等验证
+    function user_index_init()
+    {
+        $request = Request::instance();
+        $uid = $request->param('uid');
+
+        $m_user = new \app\index\model\User();
+        $user_info = $m_user->where('uid', $uid)->field('img_head, name, points, sex')->find();//TODO 增加学校
+        $result = [
+            'name' => $user_info->name,
+            'img_head' => $user_info->img_head,
+            'points' => $user_info->points,
+            'sex' => $user_info->getData('sex'),
+            'sex_info' => $user_info->sex
+        ];
+        data_format_json(0,$result,'success');
     }
 }
