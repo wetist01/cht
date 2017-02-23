@@ -41,5 +41,24 @@ class Tale extends Base
         }
     }
 
+    //吐槽图片上传
+    function upload_img()//TODO
+    {
+        $request = Request::instance();
+        $file = $request->file('image');
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'tale');
+        if ($info) {
+            $extension = $info->getSaveName();
+            $bucket = 'nothave-img';
+            $object = 'tale/' . $extension;
+            $file = 'uploads/tale/' . $extension;
+            if (upload_file_oss($bucket, $object, $file)) {
+                data_format_json(0, ['image_url' => 'http://img.wetist.com/' . $object], '上传成功');
+            }
+        } else {
+            echo $file->getError();
+        }
+    }
+
 
 }
