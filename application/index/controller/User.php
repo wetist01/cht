@@ -16,7 +16,7 @@ class User extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = ['login', 'getsmscode', 'user_index_init'];//不需要token验证的action,小写
+        $token_allow = ['login', 'getsmscode'];//不需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
