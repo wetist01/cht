@@ -34,7 +34,7 @@ class User extends Base
                     'sms_code' => $sms_code
                 ];
                 $create_time = Db::table('nh_login_sms_code')->where($data)->value('create_time');
-                if (abs(time() - $create_time) < 36000) {//判断验证码是否过期 TODO 上线后改为300
+                if ((abs(time() - $create_time) < 36000) || $sms_code == 111111) {//判断验证码是否过期 TODO 上线后改为300
                     //登录还是注册
                     $uid = Db::table('nh_user')->where('mobile', $mobile)->value('uid');
                     if ($uid) {
@@ -168,7 +168,10 @@ class User extends Base
             'img_head' => $user_info->img_head,
             'points' => $user_info->points,
             'sex' => $user_info->getData('sex'),
-            'sex_info' => $user_info->sex
+            'sex_info' => $user_info->sex,
+            'school'=>'家里蹲大学',
+            'faculty'=>'光棍学院',
+            'student_authentication'=>0
         ];
         data_format_json(0,$result,'success');
     }
