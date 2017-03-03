@@ -16,12 +16,29 @@ class Tale extends Base
     {
         $data['longitude'] = encode_coordinate($data['longitude']);
         $data['latitude'] = encode_coordinate($data['latitude']);
-        $data['coordinate'] = $data['longitude'].$data['latitude'];
+        $data['coordinate'] = $data['longitude'] . $data['latitude'];
         $m_tale = new \app\index\model\Tale();
-        if ($m_tale->allowField(true)->save($data)){
-            data_format_json(0,'','创建成功');
-        }else{
-            data_format_json(-1,'','创建失败，请稍后重试');
+        if ($m_tale->allowField(true)->save($data)) {
+            data_format_json(0, '', '创建成功');
+        } else {
+            data_format_json(-1, '', '创建失败，请稍后重试');
+        }
+    }
+
+    //删除吐槽
+    function delete_tale($where = [])
+    {
+        if ($where['uid'] && $where['tale_id']) {
+            $m_tale = new \app\index\model\Tale();
+            $data['is_deleted'] = 1;
+            $data['delete_time'] = time();
+            if ($m_tale->allowField(true)->save($data, $where)) {
+                data_format_json(0, '', '删除成功');
+            } else {
+                data_format_json(-2, '', '删除失败，请稍后重试');
+            }
+        } else {
+            data_format_json(-1, '', '请传入正确的uid,tale_id');
         }
     }
 }

@@ -17,12 +17,13 @@ class Base extends Controller
     {
         parent::_initialize();
 
+        //判断是否需要token验证
         if ($token_allow) {
             $request = Request::instance();
             $action = $request->action();
             $uid = $request->param('uid', 0);
             $token = $request->param('token', '');
-            if (!in_array($action, $token_allow)) {
+            if (in_array($action, $token_allow)) {
                 $this->validate_token($uid, $token);
             }
         }

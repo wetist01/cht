@@ -15,7 +15,7 @@ class Tale extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = [];//不需要token验证的action,小写
+        $token_allow = [];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -39,6 +39,16 @@ class Tale extends Base
             $service_tale = new \app\index\service\Tale();
             $service_tale->create_tale($data);
         }
+    }
+
+    //删除吐槽
+    function deleteTale()//TODO
+    {
+        $request = Request::instance();
+        $where['uid'] = $request->param('uid', 0, 'intval');
+        $where['tale_id'] = $request->param('tale_id', 0, 'intval');
+        $service_tale = new \app\index\service\Tale();
+        $service_tale->delete_tale($where);
     }
 
     //吐槽图片上传

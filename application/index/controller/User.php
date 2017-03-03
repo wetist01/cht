@@ -16,7 +16,7 @@ class User extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = ['login', 'getsmscode'];//不需要token验证的action,小写
+        $token_allow = ['logout', 'upload_img_head', 'user_index_init'];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -115,7 +115,7 @@ class User extends Base
     function getSmsCode()
     {
         $sms_code = rand_number(6);
-        $content = '您的验证码是'.$sms_code.',有效期为5分钟,请尽快验证!';
+        $content = '您的验证码是' . $sms_code . ',有效期为5分钟,请尽快验证!';
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet()) {//TODO 上线后将或改为与
             $mobile = $request->param('mobile', '');
@@ -169,10 +169,10 @@ class User extends Base
             'points' => $user_info->points,
             'sex' => $user_info->getData('sex'),
             'sex_info' => $user_info->sex,
-            'school'=>'家里蹲大学',
-            'faculty'=>'光棍学院',
-            'student_authentication'=>0
+            'school' => '家里蹲大学',
+            'faculty' => '光棍学院',
+            'student_authentication' => 0
         ];
-        data_format_json(0,$result,'success');
+        data_format_json(0, $result, 'success');
     }
 }
