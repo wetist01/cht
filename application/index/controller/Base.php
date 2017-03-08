@@ -48,22 +48,22 @@ class Base extends Controller
             data_format_json(-100, '', '缺少参数uid');
         }
         if (empty($token)) {
-            data_format_json(-100, '缺少参数app_token');
+            data_format_json(-100, '', '缺少参数token');
         }
         $class_xcrypt = new \common\lib\Xcrypt(INTERFACE_KEY, "ofb", INTERFACE_KEY);
         $result = $class_xcrypt->decrypt($token);
         $result_arr = explode("|", $result);
         if (count($result_arr) < 4) {
-            data_format_json(-100, 'app_token err');
+            data_format_json(-100, '', 'token err');
         }
         if ($result_arr[1] != $uid) {
-            data_format_json(-100, 'app_token err1');
+            data_format_json(-100, '', 'token err1');
         }
 
         $key_token = "nothave_user_auth_token_" . $result_arr[1] . $result_arr[2];
         $app_token_server = Cache::get($key_token);
         if ($token != $app_token_server) {
-            data_format_json(-100, 'app_token err2');
+            data_format_json(-100, '', 'token err2');
         }
         return TRUE;
 

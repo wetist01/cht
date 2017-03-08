@@ -167,17 +167,17 @@
     },
     {
         "name": "topthink/framework",
-        "version": "v5.0.6",
-        "version_normalized": "5.0.6.0",
+        "version": "v5.0.7",
+        "version_normalized": "5.0.7.0",
         "source": {
             "type": "git",
             "url": "https://github.com/top-think/framework.git",
-            "reference": "a3a37e6cfad132d5b02ffff8f23a4abc565f7928"
+            "reference": "bcf64f19f4fadbff6c8503891689ff7e6f2fe9a3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://packagist.phpcomposer.com/files/top-think/framework/a3a37e6cfad132d5b02ffff8f23a4abc565f7928.zip",
-            "reference": "a3a37e6cfad132d5b02ffff8f23a4abc565f7928",
+            "url": "https://files.phpcomposer.com/files/top-think/framework/bcf64f19f4fadbff6c8503891689ff7e6f2fe9a3.zip",
+            "reference": "bcf64f19f4fadbff6c8503891689ff7e6f2fe9a3",
             "shasum": ""
         },
         "require": {
@@ -192,7 +192,7 @@
             "phpunit/phpunit": "4.8.*",
             "sebastian/phpcpd": "2.*"
         },
-        "time": "2017-02-07T09:39:59+00:00",
+        "time": "2017-02-25T02:51:57+00:00",
         "type": "think-framework",
         "installation-source": "dist",
         "autoload": {

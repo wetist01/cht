@@ -15,7 +15,7 @@ class Tale extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = [];//需要token验证的action,小写
+        $token_allow = ['createtale', 'deletetale'];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -30,12 +30,12 @@ class Tale extends Base
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {//TODO
             $data['uid'] = $request->param('uid', 0, 'intval');
-            $data['longitude'] = $request->param('longitude', null);
-            $data['latitude'] = $request->param('latitude', null);
+            $data['longitude'] = $request->param('longitude', null) or data_format_json(-5, '', 'longitude is null');
+            $data['latitude'] = $request->param('latitude', null) or data_format_json(-6, '', 'latitude is null');
             $data['description'] = $request->param('description', '');
             $data['is_anon'] = $request->param('is_anon', 0, 'intval');
-            $data['type'] = $request->param('type', null, 'intval');
-            $data['img'] = $request->param('img', '');
+            $data['type'] = $request->param('type', null, 'intval') or data_format_json(-7, '', 'type is null');
+            $data['img'] = $request->param('img', 'http://img.wetist.com/head/20170216/cc8789ea850e328123bff6b6b4380ae9.JPG');
             $service_tale = new \app\index\service\Tale();
             $service_tale->create_tale($data);
         }
@@ -66,9 +66,7 @@ class Tale extends Base
                 data_format_json(0, ['image_url' => 'http://img.wetist.com/' . $object], '上传成功');
             }
         } else {
-            echo $file->getError();
+            data_format_json(-100, $file->getError(), '服务异常');
         }
     }
-
-
 }
