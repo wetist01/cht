@@ -46,16 +46,14 @@ function is_mobile_num($mobile_num = 0)
 }
 
 //随机六位数
-function rand_number ($length = 6)
+function rand_number($length = 6)
 {
-    if($length < 1)
-    {
+    if ($length < 1) {
         $length = 6;
     }
 
     $min = 1;
-    for($i = 0; $i < $length - 1; $i ++)
-    {
+    for ($i = 0; $i < $length - 1; $i++) {
         $min = $min * 10;
     }
     $max = $min * 10 - 1;
