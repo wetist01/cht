@@ -12,11 +12,34 @@ use think\Controller;
 
 class GeoHash extends Controller
 {
+    private $neighbors = [];
+    private $borders = [];
+
     private $coding = "0123456789bcdefghjkmnpqrstuvwxyz";
     private $codingMap = [];
 
     public function _initialize()
     {
+        $this->neighbors['right']['even'] = 'bc01fg45238967deuvhjyznpkmstqrwx';
+        $this->neighbors['left']['even'] = '238967debc01fg45kmstqrwxuvhjyznp';
+        $this->neighbors['top']['even'] = 'p0r21436x8zb9dcf5h7kjnmqesgutwvy';
+        $this->neighbors['bottom']['even'] = '14365h7k9dcfesgujnmqp0r2twvyx8zb';
+
+        $this->borders['right']['even'] = 'bcfguvyz';
+        $this->borders['left']['even'] = '0145hjnp';
+        $this->borders['top']['even'] = 'prxz';
+        $this->borders['bottom']['even'] = '028b';
+
+        $this->neighbors['bottom']['odd'] = $this->neighbors['left']['even'];
+        $this->neighbors['top']['odd'] = $this->neighbors['right']['even'];
+        $this->neighbors['left']['odd'] = $this->neighbors['bottom']['even'];
+        $this->neighbors['right']['odd'] = $this->neighbors['top']['even'];
+
+        $this->borders['bottom']['odd'] = $this->borders['left']['even'];
+        $this->borders['top']['odd'] = $this->borders['right']['even'];
+        $this->borders['left']['odd'] = $this->borders['bottom']['even'];
+        $this->borders['right']['odd'] = $this->borders['top']['even'];
+
         //build map from encoding char to 0 padded bitfield
         for ($i = 0; $i < 32; $i++) {
             $this->codingMap[substr($this->coding, $i, 1)] = str_pad(decbin($i), 5, "0", STR_PAD_LEFT);
@@ -134,6 +157,36 @@ class GeoHash extends Controller
 
 
         return $hash;
+    }
+
+    private function calculateAdjacent($srcHash, $dir)
+    {
+        $srcHash = strtolower($srcHash);
+        $lastChr = $srcHash[strlen($srcHash) - 1];
+        $type = (strlen($srcHash) % 2) ? 'odd' : 'even';
+        $base = substr($srcHash, 0, strlen($srcHash) - 1);
+
+        if (strpos($this->borders[$dir][$type], $lastChr) !== false) {
+            $base = $this->calculateAdjacent($base, $dir);
+        }
+
+        return $base . $this->coding[strpos($this->neighbors[$dir][$type], $lastChr)];
+    }
+
+    //得到九宫格
+    public function neighbors($srcHash)
+    {
+        $neighbors['top'] = $this->calculateAdjacent($srcHash, 'top');
+        $neighbors['bottom'] = $this->calculateAdjacent($srcHash, 'bottom');
+        $neighbors['right'] = $this->calculateAdjacent($srcHash, 'right');
+        $neighbors['left'] = $this->calculateAdjacent($srcHash, 'left');
+
+        $neighbors['topleft'] = $this->calculateAdjacent($neighbors['left'], 'top');
+        $neighbors['topright'] = $this->calculateAdjacent($neighbors['right'], 'top');
+        $neighbors['bottomright'] = $this->calculateAdjacent($neighbors['right'], 'bottom');
+        $neighbors['bottomleft'] = $this->calculateAdjacent($neighbors['left'], 'bottom');
+
+        return $neighbors;
     }
 
     /**

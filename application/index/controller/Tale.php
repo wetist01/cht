@@ -8,8 +8,6 @@
 
 namespace app\index\controller;
 
-use think\App;
-use think\Db;
 use think\Request;
 
 class Tale extends Base
@@ -20,9 +18,19 @@ class Tale extends Base
         parent::_initialize($token_allow, $request);
     }
 
+    //获取吐槽列表
     function taleList()
     {
-
+        $request = Request::instance();
+        if ($request->isAjax() || $request->isGet() || $request->isPost()) {
+            $page = $request->param('page', 1, 'intval');
+            $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
+            $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
+            $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
+            $service_tale = new \app\index\service\Tale();
+            $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error);
+            dump($tale_list);
+        }
     }
 
     //创建吐槽接口
@@ -31,8 +39,8 @@ class Tale extends Base
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {//TODO
             $data['uid'] = $request->param('uid', 0, 'intval');
-            $data['longitude'] = $request->param('longitude', null) or data_format_json(-5, '', 'longitude is null');
-            $data['latitude'] = $request->param('latitude', null) or data_format_json(-6, '', 'latitude is null');
+            $data['longitude'] = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
+            $data['latitude'] = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $data['description'] = $request->param('description', '');
             $data['is_anon'] = $request->param('is_anon', 0, 'intval');
             $data['type'] = $request->param('type', null, 'intval') or data_format_json(-7, '', 'type is null');
@@ -69,5 +77,26 @@ class Tale extends Base
         } else {
             data_format_json(-100, $file->getError(), '服务异常');
         }
+    }
+
+    function test()
+    {
+        $request = Request::instance();
+        $a = $request->param('a');
+        $data['uid'] = 1;
+        $data['longitude'] = explode(',', $a)[0];
+        $data['latitude'] = explode(',', $a)[1];
+        $data['description'] = 1111111111111111111;
+        $data['is_anon'] = 1;
+        $data['type'] = 2;
+        $data['img'] = $request->param('img', 'http://img.wetist.com/head/20170216/cc8789ea850e328123bff6b6b4380ae9.JPG');
+        $service_tale = new \app\index\service\Tale();
+        $service_tale->create_tale($data);
+    }
+
+    function test1()
+    {
+        $a = getNeighbors(118.9095170, 31.9036200, 6);
+        dump($a);
     }
 }

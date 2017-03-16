@@ -86,3 +86,35 @@ function geohash_encode($long = 0, $lat = 0)
         return $result;
     }
 }
+
+/**
+ * 根据geohash值得到与自身相近的八个区域的geohash
+ * @param int $long 经度
+ * @param int $lat 纬度
+ * @param int $str_num geohash经度，默认为6,代表附近2km内
+ * @return bool|string
+ */
+function getNeighbors($long = 0, $lat = 0, $str_num = 6)
+{
+    if ($lat == 0 && $long == 0) {
+        return false;
+    } else {
+        $geo = new \app\index\controller\GeoHash();
+
+        $hash = $geo->encode($lat, $long);
+
+        $pre_hash = substr($hash, 0, $str_num);
+
+        //取出相邻八个区域
+        $neighbors = $geo->neighbors($pre_hash);
+        array_push($neighbors, $pre_hash);
+
+        $values = '';
+        foreach ($neighbors as $key => $val) {
+            $values .= '\'' . $val . '\'' . ',';
+        }
+        $values = substr($values, 0, -1);
+
+        return $values;
+    }
+}
