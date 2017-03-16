@@ -1,14 +1,4 @@
 <?php
-// +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
-// +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
-// +----------------------------------------------------------------------
-// | Author: 流年 <liu21st@gmail.com>
-// +----------------------------------------------------------------------
-
 //短信发送公共方法
 function send_sms($mobile = '', $text = '')
 {
@@ -59,4 +49,40 @@ function rand_number($length = 6)
     $max = $min * 10 - 1;
 
     return rand($min, $max);
+}
+
+/**
+ * 将geohash值解码为经纬度
+ * @param string $hash geohash值
+ * @return array|bool
+ */
+function geohash_decode($hash = '')
+{
+    if (!$hash) {
+        return false;
+    } else {
+        $geo = new \app\index\controller\GeoHash();
+        $result = $geo->decode($hash);
+        $lat = $result[0];
+        $long = $result[1];
+        $result = [$long, $lat];
+        return $result;
+    }
+}
+
+/**
+ * 将普通经纬度进行geohash编码
+ * @param int $long 经度
+ * @param int $lat 纬度
+ * @return bool|string 返回编码后的geohash
+ */
+function geohash_encode($long = 0, $lat = 0)
+{
+    if ($lat == 0 && $long == 0) {
+        return false;
+    } else {
+        $geo = new \app\index\controller\GeoHash();
+        $result = $geo->encode($lat, $long);
+        return $result;
+    }
 }

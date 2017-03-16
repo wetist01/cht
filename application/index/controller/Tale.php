@@ -8,7 +8,8 @@
 
 namespace app\index\controller;
 
-
+use think\App;
+use think\Db;
 use think\Request;
 
 class Tale extends Base
