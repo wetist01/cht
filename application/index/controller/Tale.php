@@ -25,11 +25,12 @@ class Tale extends Base
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {
             $page = $request->param('page', 1, 'intval');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
+            $uid = $request->param('uid', 0, 'intval');
             $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
-            $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error);
-            dump($tale_list);
+            $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error, $uid);
+            data_format_json(0,$tale_list);
         }
     }
 
@@ -94,9 +95,4 @@ class Tale extends Base
         $service_tale->create_tale($data);
     }
 
-    function test1()
-    {
-        $a = getNeighbors(118.9095170, 31.9036200, 6);
-        dump($a);
-    }
 }

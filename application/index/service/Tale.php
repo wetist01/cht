@@ -9,6 +9,7 @@
 namespace app\index\service;
 
 
+use think\Cache;
 use think\Db;
 
 class Tale extends Base
@@ -53,10 +54,18 @@ class Tale extends Base
         }
     }
 
-    function get_tale_list($page, $long, $lat, $near_error)
+    function get_tale_list($page, $long, $lat, $near_error, $uid)
     {
-        $neighbors = getNeighbors($long, $lat, $near_error);
-        $tale_list = Db::query("SELECT * FROM nh_tale WHERE left(geohash,$near_error) IN ($neighbors);");
+        $tale_list_redis = Cache::get('tale_list_' . $uid);
+        if ($tale_list_redis) {
+            $tale_list = $tale_list_redis;
+        } else {
+            $neighbors = getNeighbors($long, $lat, $near_error);
+            $tale_list = Db::query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors);");
+            if ($uid) {
+                Cache::set('tale_list_' . $uid, $tale_list, 120);
+            }
+        }
         return $tale_list;
     }
 }
