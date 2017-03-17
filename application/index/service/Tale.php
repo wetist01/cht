@@ -54,17 +54,20 @@ class Tale extends Base
         }
     }
 
-    function get_tale_list($page, $long, $lat, $near_error, $uid)
+    function get_tale_list($page, $long, $lat, $near_error)
     {
-        $tale_list_redis = Cache::get('tale_list_' . $uid);
+
+        $key_redis = 'tale_list_' . substr(geohash_encode($long, $lat), 0, $near_error);
+        $tale_list_redis = Cache::get($key_redis);
         if ($tale_list_redis) {
             $tale_list = $tale_list_redis;
         } else {
             $neighbors = getNeighbors($long, $lat, $near_error);
             $tale_list = Db::query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors);");
-            if ($uid) {
-                Cache::set('tale_list_' . $uid, $tale_list, 120);
-            }
+            Cache::set($key_redis, $tale_list, 120);
+        }
+        foreach ($tale_list as $key => $value) {
+            $tale_list[$key] = 1;
         }
         return $tale_list;
     }

@@ -25,12 +25,11 @@ class Tale extends Base
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {
             $page = $request->param('page', 1, 'intval');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
-            $uid = $request->param('uid', 0, 'intval');
             $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
-            $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error, $uid);
-            dump($tale_list);
+            $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error);
+            echo 1;
         }
     }
 
@@ -82,15 +81,14 @@ class Tale extends Base
 
     function test()
     {
-        $request = Request::instance();
-        $a = $request->param('a');
+        $a = '118.902295,31.914517';
         $data['uid'] = 1;
         $data['longitude'] = explode(',', $a)[0];
         $data['latitude'] = explode(',', $a)[1];
         $data['description'] = 1111111111111111111;
         $data['is_anon'] = 1;
         $data['type'] = 2;
-        $data['img'] = $request->param('img', 'http://img.wetist.com/head/20170216/cc8789ea850e328123bff6b6b4380ae9.JPG');
+        $data['img'] = 'http://img.wetist.com/head/20170216/cc8789ea850e328123bff6b6b4380ae9.JPG';
         $service_tale = new \app\index\service\Tale();
         $service_tale->create_tale($data);
     }
