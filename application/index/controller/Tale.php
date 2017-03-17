@@ -30,7 +30,7 @@ class Tale extends Base
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
             $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error, $uid);
-            data_format_json(0,$tale_list);
+            dump($tale_list);
         }
     }
 
