@@ -56,7 +56,6 @@ class Tale extends Base
 
     function get_tale_list($page, $long, $lat, $near_error)
     {
-
         $key_redis = 'tale_list_' . substr(geohash_encode($long, $lat), 0, $near_error);
         $tale_list_redis = Cache::get($key_redis);
         if ($tale_list_redis) {
@@ -67,7 +66,7 @@ class Tale extends Base
             Cache::set($key_redis, $tale_list, 120);
         }
         foreach ($tale_list as $key => $value) {
-            $tale_list[$key] = 1;
+            $tale_list[$key]['distance'] = getDistance($long,$lat,$value['longitude'],$value['latitude']);
         }
         return $tale_list;
     }
