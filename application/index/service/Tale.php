@@ -62,11 +62,11 @@ class Tale extends Base
             $tale_list = $tale_list_redis;
         } else {
             $neighbors = getNeighbors($long, $lat, $near_error);
-            $tale_list = Db::query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors);");
+            $tale_list = Db::query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors)");
             Cache::set($key_redis, $tale_list, 120);
         }
         foreach ($tale_list as $key => $value) {
-            $tale_list[$key]['distance'] = getDistance($long,$lat,$value['longitude'],$value['latitude']);
+            $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
         }
         return $tale_list;
     }
