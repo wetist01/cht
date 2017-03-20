@@ -16,7 +16,7 @@ class Tale extends Model
 {
     protected $pk = 'tale_id';
 
-    protected $readonly = ['uid', 'user_name', 'geohash', 'longitude', 'latitude', 'create_time'];
+    protected $readonly = ['uid', 'user_name', 'geohash', 'longitude', 'latitude', 'create_time', 'img_head'];
 
     /**
      * 获取附近原始数据

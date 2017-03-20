@@ -8,6 +8,8 @@
 
 namespace app\index\service;
 
+use think\Db;
+
 class Tale extends Base
 {
     //创建吐槽
@@ -24,10 +26,16 @@ class Tale extends Base
         } else {
             data_format_json(-4, '', 'type is error');
         }
+
         $data['geohash'] = geohash_encode($data['longitude'], $data['latitude']);
+
+        $m_user = new \app\index\model\User();
+        $data['user_name'] = $m_user->where('uid', $data['uid'])->value('name');
+        $data['img_head'] = $m_user->where('uid', $data['uid'])->value('img_head');
         $m_tale = new \app\index\model\Tale();
+
         if ($m_tale->allowField(true)->save($data)) {
-            data_format_json(0, $m_tale->getLastSql(), '创建成功');
+//            data_format_json(0, $m_tale->tale_id, '创建成功');
         } else {
             data_format_json(-1, '', '创建失败，请稍后重试');
         }
@@ -65,6 +73,8 @@ class Tale extends Base
         if ($tale_list) {
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
+                unset($tale_list[$key]['longitude']);
+                unset($tale_list[$key]['latitude']);
             }
         } else {
             $tale_list = [];
