@@ -24,16 +24,16 @@ class Tale extends Base
     {
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {
-            $page = $request->param('page', 1, 'intval');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
             $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
-            $tale_list = $service_tale->get_tale_list($page, $long, $lat, $near_error);
+            $tale_list = $service_tale->get_tale_list($long, $lat, $near_error);
             if ($tale_list) {
-                data_format_json(0, $tale_list, 'success');
+//                data_format_json(0, $tale_list, 'success');
+                dump($tale_list[0]);
             } else {
-                data_format_json(-1, '', '未知错误');
+                data_format_json(-1, '', '没有数据');
             }
         }
     }
@@ -100,8 +100,15 @@ class Tale extends Base
 
     function test1()
     {
-        for ($i = 0; $i < 10000; $i++) {
-            Db::table('nh_user')->where('uid', 1)->select();
+        for ($i = 0; $i < 100; $i++) {
+            Db::query("select * from nh_user where uid = 1");
+        }
+    }
+
+    function test2()
+    {
+        for ($i = 0; $i < 5000; $i++) {
+            $this->test();
         }
     }
 

@@ -8,10 +8,6 @@
 
 namespace app\index\service;
 
-
-use think\Cache;
-use think\Db;
-
 class Tale extends Base
 {
     //创建吐槽
@@ -54,20 +50,27 @@ class Tale extends Base
         }
     }
 
-    function get_tale_list($page, $long, $lat, $near_error)
+    /**
+     * 对附近的原始数据进行处理
+     * @param int $long 经度
+     * @param int $lat 纬度
+     * @param int $near_error 精度，默认6，代表附近2km
+     * @return array|mixed
+     */
+    function get_tale_list($long = 0, $lat = 0, $near_error = 6)
     {
-        $key_redis = 'tale_list_' . substr(geohash_encode($long, $lat), 0, $near_error);
-        $tale_list_redis = Cache::get($key_redis);
-        if ($tale_list_redis) {
-            $tale_list = $tale_list_redis;
+        $model_tale = new \app\index\model\Tale();
+        $tale_list = $model_tale->get_tale_list($long, $lat, $near_error);
+
+        if ($tale_list) {
+            foreach ($tale_list as $key => $value) {
+                $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
+            }
         } else {
-            $neighbors = getNeighbors($long, $lat, $near_error);
-            $tale_list = Db::query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors)");
-            Cache::set($key_redis, $tale_list, 120);
+            $tale_list = [];
         }
-        foreach ($tale_list as $key => $value) {
-            $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
-        }
+
         return $tale_list;
     }
+
 }

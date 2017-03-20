@@ -15,10 +15,17 @@ class User extends Model
 {
     protected $pk = 'uid';
 
+    protected $insert = ['ip'];
+
     public function getSexAttr($value)
     {
-        $sex= [0=>'保密',1=>'男',2=>'女'];
+        $sex = [0 => '保密', 1 => '男', 2 => '女'];
         return $sex[$value];
+    }
+
+    protected function setIpAttr()
+    {
+        return request()->ip();
     }
 
 }
