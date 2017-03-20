@@ -30,8 +30,7 @@ class Tale extends Base
             $service_tale = new \app\index\service\Tale();
             $tale_list = $service_tale->get_tale_list($long, $lat, $near_error);
             if ($tale_list) {
-//                data_format_json(0, $tale_list, 'success');
-                dump($tale_list);
+                data_format_json(0, $tale_list, 'success');
             } else {
                 data_format_json(-1, '', '没有数据');
             }
