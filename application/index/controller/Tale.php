@@ -31,7 +31,7 @@ class Tale extends Base
             $tale_list = $service_tale->get_tale_list($long, $lat, $near_error);
             if ($tale_list) {
 //                data_format_json(0, $tale_list, 'success');
-                dump($tale_list[0]);
+                dump($tale_list);
             } else {
                 data_format_json(-1, '', '没有数据');
             }
@@ -107,7 +107,7 @@ class Tale extends Base
 
     function test2()
     {
-        for ($i = 0; $i < 5000; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             $this->test();
         }
     }
@@ -117,6 +117,11 @@ class Tale extends Base
         $a = rand(899222, 907056) / 1000000 + 118;
         $b = rand(904187, 918042) / 1000000 + 31;
         return $a . ',' . $b;
+    }
+
+    function test4()
+    {
+        getDistance();
     }
 
 }

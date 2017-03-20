@@ -35,7 +35,7 @@ class Tale extends Base
         $m_tale = new \app\index\model\Tale();
 
         if ($m_tale->allowField(true)->save($data)) {
-//            data_format_json(0, $m_tale->tale_id, '创建成功');
+            data_format_json(0, '', '创建成功');
         } else {
             data_format_json(-1, '', '创建失败，请稍后重试');
         }
@@ -73,6 +73,12 @@ class Tale extends Base
         if ($tale_list) {
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
+                $tale_list[$key]['d_value'] = getTimeDifference($value['update_time']);
+
+                if ($value['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
+                    $tale_list[$key]['user_name'] = '匿名';
+                }
+
                 unset($tale_list[$key]['longitude']);
                 unset($tale_list[$key]['latitude']);
             }
