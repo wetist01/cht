@@ -26,7 +26,7 @@ class Comment extends Base
         if ($result) {
             $m_tale = new \app\index\model\Tale();
             $m_tale->change_comment_num($data['tale_id']);
-            data_format_json(0, 'comment_id:' . $m_comment->comment_id, 'success');
+//            data_format_json(0, 'comment_id:' . $m_comment->comment_id, 'success');
         } else {
             data_format_json(-101, '', 'mysql insert fail');
         }
