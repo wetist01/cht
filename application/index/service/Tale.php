@@ -8,7 +8,6 @@
 
 namespace app\index\service;
 
-use think\Db;
 
 class Tale extends Base
 {

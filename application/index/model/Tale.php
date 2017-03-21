@@ -45,4 +45,33 @@ class Tale extends Model
 
         return $tale_list;
     }
+
+    /**
+     * 判断uid,tale_id是否匹配
+     * @param int $uid
+     * @param int $tale_id
+     * @return int
+     */
+    function match_uid_tale_id($uid = 0, $tale_id = 0)
+    {
+        $where['uid'] = $uid;
+        $where['tale_id'] = $tale_id;
+        return $this->where($where)->count();
+    }
+
+    /**
+     * 改变主表中评论数
+     * @author kongjian
+     * @param $tale_id
+     * @param int $type 1代表自增，2代表自减
+     */
+    function change_comment_num($tale_id, $type = 1)
+    {
+        if ($type == 1) {
+            $this->where('tale_id', $tale_id)->setInc('comment_num');
+            $this->isUpdate(true)->save(['update_time' => time()], ['tale_id' => $tale_id]);
+        } elseif ($type == 2) {
+            $this->where('tale_id', $tale_id)->setDec('comment_num');
+        }
+    }
 }
