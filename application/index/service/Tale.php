@@ -72,7 +72,7 @@ class Tale extends Base
         if ($tale_list) {
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
-                $tale_list[$key]['d_value'] = getTimeDifference($value['update_time']);
+                $tale_list[$key]['d_value'] = getTimeDifference($value['create_time']);
 
                 if ($value['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
                     $tale_list[$key]['user_name'] = '匿名';
