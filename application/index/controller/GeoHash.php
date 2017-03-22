@@ -1,7 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: wetist
+ * User: kongjian
  * Date: 2017/3/16
  * Time: 10:05
  */

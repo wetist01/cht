@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户相关控制器
- * User: wetist
+ * User: kongjian
  * Date: 2017/2/6
  * Time: 22:01
  */

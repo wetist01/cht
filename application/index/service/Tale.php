@@ -1,7 +1,7 @@
 <?php
 /**
  * 吐槽逻辑处理
- * User: wetist
+ * User: kongjian
  * Date: 2017/2/16
  * Time: 23:19
  */

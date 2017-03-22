@@ -1,8 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
  * 用户模型类
- * User: wetist
+ * User: kongjian
  * Date: 2017/1/17
  * Time: 10:28
  */

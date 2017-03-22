@@ -1,8 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
  * 评论模型类
- * User: wetist
+ * User: kongjian
  * Date: 2017/1/17
  * Time: 10:28
  */
@@ -44,5 +43,25 @@ class Comment extends Model
         } elseif ($type == 2) {
             $this->where('comment_id', $comment_id)->setDec('comment_num');
         }
+    }
+
+    /**
+     * 改变like_num值
+     * @param $comment_id
+     * @param int $type 1自增，2自减
+     * @return int|true|false
+     */
+    function change_comment_like_num($comment_id, $type = 1)
+    {
+        if ($type == 1) {
+            $this->where('comment_id', $comment_id)->setInc('like_num');
+            $like_num = $this->where('comment_id', $comment_id)->value('like_num');
+        } elseif ($type == 2) {
+            $this->where('comment_id', $comment_id)->setDec('like_num');
+            $like_num = $this->where('comment_id', $comment_id)->value('like_num');
+        } else {
+            $like_num = false;
+        }
+        return $like_num;
     }
 }
