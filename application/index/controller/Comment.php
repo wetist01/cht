@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 
+use think\Cache;
 use think\Request;
 
 class Comment extends Base
@@ -33,4 +34,22 @@ class Comment extends Base
         $service_comment->create_comment($data);
     }
 
+    /**
+     * 获取评论列表
+     */
+    function commentList()
+    {
+        $request = Request::instance();
+        $data['tale_id'] = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
+        $data['page'] = $request->param('page', 1, 'intval');
+        $data['longitude'] = $request->param('longitude', null, 'floatval');
+        $data['latitude'] = $request->param('latitude', null, 'floatval');
+        $service_comment = new \app\index\service\Comment();
+        $service_comment->get_comment_list_by_tale_id($data);
+    }
+
+    function test()
+    {
+        Cache::clear('comment_list_tale_1');
+    }
 }

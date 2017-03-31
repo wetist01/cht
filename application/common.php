@@ -131,6 +131,9 @@ function getNeighbors($long = 0, $lat = 0, $str_num = 6)
  */
 function getDistance($longitude1 = 0, $latitude1 = 0, $longitude2 = 0, $latitude2 = 0, $decimal1 = 0, $decimal2 = 0)
 {
+    if ($latitude1 == 0 || $longitude1 == 0 || $latitude2 == 0 || $longitude2 == 0) {
+        return '';
+    }
     $EARTH_RADIUS = 6370.996; // 地球半径系数
     $PI = 3.1415926;
 

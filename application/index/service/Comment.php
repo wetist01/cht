@@ -9,6 +9,8 @@
 namespace app\index\service;
 
 
+use think\Cache;
+
 class Comment extends Base
 {
     /**
@@ -47,7 +49,7 @@ class Comment extends Base
         if ($result) {
             $m_tale = new \app\index\model\Tale();
             $m_tale->change_comment_num($data['tale_id']);//改变tale表中的评论数以及更新时间
-
+            Cache::clear('comment_list_tale_' . $data['tale_id']);
             data_format_json(0, 'comment_id:' . $m_comment->comment_id, 'success');
         } else {
             data_format_json(-101, '', 'mysql insert fail');
@@ -81,7 +83,7 @@ class Comment extends Base
                 $m_tale = new \app\index\model\Tale();
                 $m_tale->change_comment_num($data['tale_id']);//改变tale表中的评论数以及更新时间
                 $m_comment->change_comment_num($parent_comment_id);//改变comment表中被评论的那条记录的评论数
-
+                Cache::clear('comment_list_tale_' . $data['tale_id']);
                 data_format_json(0, 'comment_id:' . $comment_id, 'success');
             } else {
                 data_format_json(-101, '', 'mysql insert fail');
@@ -90,6 +92,23 @@ class Comment extends Base
         } else {
             data_format_json(-1, '', 'tale_id,comment_id is not matched');
         }
+    }
+
+    /**
+     * 根据tale_id获取评论列表
+     * @author kongjian
+     * @param array $data
+     */
+    function get_comment_list_by_tale_id($data = [])
+    {
+        $m_comment = new \app\index\model\Comment();
+        $result = $m_comment->get_comment_list_by_tale_id($data['tale_id'], $data['page']);
+
+        foreach ($result as $key => $val) {
+            $result[$key]['distance'] = getDistance($data['longitude'], $data['latitude'], $val['longitude'], $val['latitude']);
+        }
+
+        data_format_json(0, $result, 'success');
     }
 
 }

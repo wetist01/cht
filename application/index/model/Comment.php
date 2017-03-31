@@ -8,6 +8,7 @@
 
 namespace app\index\model;
 
+use think\Cache;
 use think\Model;
 
 class Comment extends Model
@@ -15,6 +16,24 @@ class Comment extends Model
     protected $pk = 'comment_id';
 
     protected $readonly = ['uid', 'tale_id', 'create_time', 'content'];
+
+    /**
+     * 查询公共方法
+     * @author kongjian
+     * @param null $where
+     * @param string $field
+     * @param int $type
+     * @return array|false|\PDOStatement|string|\think\Collection|Model
+     */
+    function fetchWhere($where = null, $field = '*', $type = 0)
+    {
+        if ($type == 0) {
+            $result = $this->where($where)->field($field)->select();
+        } else {
+            $result = $this->where($where)->field($field)->find();
+        }
+        return $result;
+    }
 
     /**
      * 判断tale_id,comment_id是否匹配
@@ -63,5 +82,29 @@ class Comment extends Model
             $like_num = false;
         }
         return $like_num;
+    }
+
+    /**
+     * 根据tale_id获取评论列表
+     * @author kongjian
+     * @param $tale_id
+     * @param int $page
+     * @return false|mixed|\PDOStatement|string|\think\Collection
+     */
+    function get_comment_list_by_tale_id($tale_id, $page = 1)
+    {
+        $key = 'comment_list_tale_' . $tale_id . '_' . $page;
+        $comment_list_cache = Cache::get($key);
+        if ($comment_list_cache) {
+            return $comment_list_cache;
+        } else {
+            $where['tale_id'] = $tale_id;
+            $where['status'] = 0;
+            $where['is_deleted'] = 0;
+            $comment_list = $this->where($where)->field('comment_id,tale_id,uid,user_name,img_head,content,create_time,longitude,latitude')->page($page, 20)->select();
+            $comment_list = json_decode(json_encode($comment_list),true);
+            Cache::tag('comment_list_tale_'.$tale_id)->set($key, $comment_list, 3600);
+            return $comment_list;
+        }
     }
 }
