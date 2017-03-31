@@ -35,7 +35,7 @@ class Comment extends Base
     }
 
     /**
-     * 创建一级评论
+     * 直接给tale评论
      * @author kongjian
      * @param $data
      */
@@ -55,7 +55,7 @@ class Comment extends Base
     }
 
     /**
-     * 创建二级评论
+     * 回复评论
      * @author kongjian
      * @param $data
      */
@@ -72,7 +72,7 @@ class Comment extends Base
             $parent_comment = $m_comment->where('comment_id', $parent_comment_id)->find();
             $parent_content = $parent_comment['content'];
             $parent_user_name = $parent_comment['user_name'];
-            $data['content'] = $data['content'] . '//@' . $parent_user_name . ':' . $parent_content;
+            $data['content'] = '回复 ' . $parent_user_name . ':' . $data['content'];
 
             $result = $m_comment->allowField(true)->save($data);
             $comment_id = $m_comment->comment_id;
