@@ -72,7 +72,6 @@ class Comment extends Base
             $data['parent_comment_id'] = $parent_comment_id;
 
             $parent_comment = $m_comment->where('comment_id', $parent_comment_id)->find();
-            $parent_content = $parent_comment['content'];
             $parent_user_name = $parent_comment['user_name'];
             $data['content'] = '回复 ' . $parent_user_name . ':' . $data['content'];
 
