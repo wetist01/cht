@@ -24,9 +24,10 @@ class Comment extends Base
             data_format_json(-100, '', 'data is empty');
         }
         $m_user = new \app\index\model\User();
-        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'name,img_head', 1);
-        $data['user_name'] = $user_info['name'];
+        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'name,sex,img_head', 1);
+        $data['user_name'] = $user_info['user_name'];
         $data['img_head'] = $user_info['img_head'];
+        $data['sex'] = $user_info['sex'];
 
         if ($data['comment_id'] == 0) {//创建一级评论
             $this->create_comment_tale($data);

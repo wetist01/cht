@@ -37,6 +37,17 @@ class Tale extends Base
         }
     }
 
+    //获取单条吐槽详情
+    function taleInfo()
+    {
+        $request = Request::instance();
+        $data['tale_id'] = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
+        $data['longitude'] = $request->param('longitude', null, 'floatval') or data_format_json(-1, '', 'longitude is null');
+        $data['latitude'] = $request->param('latitude', null, 'floatval') or data_format_json(-1, '', 'latitude is null');
+        $service_tale = new \app\index\service\Tale();
+        $service_tale->get_tale_info($data);
+    }
+
     //创建吐槽接口
     function createTale()
     {

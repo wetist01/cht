@@ -29,8 +29,11 @@ class Tale extends Base
         $data['geohash'] = geohash_encode($data['longitude'], $data['latitude']);
 
         $m_user = new \app\index\model\User();
-        $data['user_name'] = $m_user->where('uid', $data['uid'])->value('name');
-        $data['img_head'] = $m_user->where('uid', $data['uid'])->value('img_head');
+        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'name,sex,img_head', 1);
+        $data['user_name'] = $user_info['user_name'];
+        $data['img_head'] = $user_info['img_head'];
+        $data['sex'] = $user_info['sex'];
+
         $m_tale = new \app\index\model\Tale();
 
         if ($m_tale->allowField(true)->save($data)) {
@@ -72,7 +75,7 @@ class Tale extends Base
         if ($tale_list) {
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
-                $tale_list[$key]['d_value'] = getTimeDifference($value['create_time']);
+                $tale_list[$key]['latest_reply_time'] = getTimeDifference($value['update_time']);
 
                 if ($value['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
                     $tale_list[$key]['user_name'] = '匿名';
@@ -86,6 +89,36 @@ class Tale extends Base
         }
 
         return $tale_list;
+    }
+
+    /**
+     * 根据tale_id获取单条tale详情
+     * @author kongjian
+     * @param array $data
+     */
+    function get_tale_info($data)
+    {
+        $m_tale = new \app\index\model\Tale();
+        $where['tale_id'] = $data['tale_id'];
+        $field = 'tale_id,uid,user_name,sex,img_head,like_num,comment_num,description,is_anon,type,img,update_time,longitude,latitude';
+        $info = $m_tale->fetchWhere($where, $field, 1);
+        if ($info) {
+            $info = json_decode(json_encode($info), true);
+
+            if ($info['is_anon'] == 1) {
+                $info['user_name'] = '匿名';
+            }
+
+            $info['distance'] = getDistance($data['longitude'], $data['latitude'], $info['longitude'], $info['latitude']);
+
+            $info['latest_reply_time'] = getTimeDifference($info['update_time']);
+
+            unset($info['update_time'], $info['longitude'], $info['latitude']);
+
+            data_format_json(0, $info, 'success');
+        } else {
+            data_format_json(-1, '', 'return is null');
+        }
     }
 
 }

@@ -68,7 +68,7 @@ class User extends Base
                 'mobile' => $mobile,
                 'create_time' => time(),
                 'update_time' => time(),
-                'name' => $name
+                'user_name' => $name
             ]);
             $user->save();
             $uid = $user->uid;
@@ -162,9 +162,9 @@ class User extends Base
         $uid = $request->param('uid');
 
         $m_user = new \app\index\model\User();
-        $user_info = $m_user->where('uid', $uid)->field('img_head, name, points, sex')->find();//TODO 增加学校
+        $user_info = $m_user->where('uid', $uid)->field('img_head, user_name, points, sex')->find();//TODO 增加学校
         $result = [
-            'name' => $user_info->name,
+            'name' => $user_info->user_name,
             'img_head' => $user_info->img_head,
             'points' => $user_info->points,
             'sex' => $user_info->getData('sex'),

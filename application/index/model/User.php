@@ -18,7 +18,7 @@ class User extends Model
 
     public function getSexAttr($value)
     {
-        $sex = [0 => '保密', 1 => '男', 2 => '女'];
+        $sex = [0 => '女', 1 => '男', 2 => '未知'];
         return $sex[$value];
     }
 

@@ -161,7 +161,7 @@ function getDistance($longitude1 = 0, $latitude1 = 0, $longitude2 = 0, $latitude
 
 /**
  * 获取时间差
- * @param int $time 时间戳
+ * @param $time
  * @return false|float|int|string
  */
 function getTimeDifference($time = 0)
@@ -169,17 +169,18 @@ function getTimeDifference($time = 0)
     if (!$time) {
         $result = '';
     } else {
+        $time = is_int($time) ? $time : strtotime($time);
         $d_value = time() - $time;
         if ($d_value < 3600) {
             $result = $d_value / 60;
             if ($result < 60) {
                 $result = '刚刚发布';
             } else {
-                $result = intval($result) . 'm ago';
+                $result = intval($result) . '分钟前';
             }
         } elseif ($d_value < 86400) {
             $result = $d_value / 3600;
-            $result = intval($result) . 'h ago';
+            $result = intval($result) . '小时前';
         } else {
             $result = date('Y-m-d H:i', $time);
         }

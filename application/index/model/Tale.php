@@ -18,6 +18,24 @@ class Tale extends Model
     protected $readonly = ['uid', 'user_name', 'geohash', 'longitude', 'latitude', 'create_time', 'img_head'];
 
     /**
+     * 查询公共方法
+     * @author kongjian
+     * @param null $where
+     * @param string $field
+     * @param int $type
+     * @return array|false|\PDOStatement|string|\think\Collection|Model
+     */
+    function fetchWhere($where = null, $field = '*', $type = 0)
+    {
+        if ($type == 0) {
+            $result = $this->where($where)->field($field)->select();
+        } else {
+            $result = $this->where($where)->field($field)->find();
+        }
+        return $result;
+    }
+
+    /**
      * 获取附近原始数据
      * @param Decimal $long 经度
      * @param Decimal $lat 纬度
