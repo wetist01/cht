@@ -31,6 +31,8 @@ class Comment extends Base
         $data['tale_id'] = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
         $data['content'] = $request->param('content', '') or data_format_json(-1, '', 'content is null');
         $data['is_anon'] = $request->param('is_anon', 0, 'intval');
+        $data['longitude'] = $request->param('longitude', null, 'floatval') or data_format_json(-1, '', 'longitude is null');
+        $data['latitude'] = $request->param('latitude', null, 'floatval') or data_format_json(-1, '', 'latitude is null');
         $service_comment = new \app\index\service\Comment();
         $service_comment->create_comment($data);
     }
