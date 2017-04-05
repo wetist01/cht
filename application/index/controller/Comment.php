@@ -30,6 +30,7 @@ class Comment extends Base
         $data['comment_id'] = $request->param('comment_id', 0, 'intval');
         $data['tale_id'] = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
         $data['content'] = $request->param('content', '') or data_format_json(-1, '', 'content is null');
+        $data['is_anon'] = $request->param('is_anon', 0, 'intval');
         $service_comment = new \app\index\service\Comment();
         $service_comment->create_comment($data);
     }

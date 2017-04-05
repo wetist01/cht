@@ -53,7 +53,7 @@ class Tale extends Model
         } else {
             $neighbors = getNeighbors($long, $lat, $near_error);
             if ($neighbors) {
-                $tale_list = $this->query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors) ORDER BY update_time DESC limit 20");
+                $tale_list = $this->query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors) ORDER BY update_time DESC limit 100");
                 Cache::set($key_redis, $tale_list, 120);
             } else {
                 $tale_list = [];

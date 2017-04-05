@@ -106,6 +106,9 @@ class Comment extends Base
 
         foreach ($result as $key => $val) {
             $result[$key]['distance'] = getDistance($data['longitude'], $data['latitude'], $val['longitude'], $val['latitude']);
+            if ($val['is_anon'] == 1) {
+                $result[$key]['user_name'] = '匿名';
+            }
         }
 
         data_format_json(0, $result, 'success');
