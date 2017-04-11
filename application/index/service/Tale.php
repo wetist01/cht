@@ -9,6 +9,8 @@
 namespace app\index\service;
 
 
+use think\Cache;
+
 class Tale extends Base
 {
     //创建吐槽
@@ -65,14 +67,28 @@ class Tale extends Base
      * @param int $long 经度
      * @param int $lat 纬度
      * @param int $near_error 精度，默认6，代表附近2km
+     * @param int $page
      * @return array|mixed
      */
-    function get_tale_list($long = 0, $lat = 0, $near_error = 6)
+    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $page = 1, $uid, $token)
     {
-        $model_tale = new \app\index\model\Tale();
-        $tale_list = $model_tale->get_tale_list($long, $lat, $near_error);
+        if ($uid && $token) {//判断是否是登录用户,如果登录从缓存读取数据
+            $key = 'tale_list_login_' . $uid . '_' . $token;
+            $tale_list_cache = Cache::get($key);
+            if ($tale_list_cache) {
+                $tale_list = $tale_list_cache;
+            } else {
+                $model_tale = new \app\index\model\Tale();
+                $tale_list = $model_tale->get_tale_list($long, $lat, $near_error);
+                Cache::set($key, $tale_list, 3600);
+            }
+        } else {
+            $model_tale = new \app\index\model\Tale();
+            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 20);
+        }
 
         if ($tale_list) {
+            $tale_list = page_array($tale_list, $page, 20);
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
                 $tale_list[$key]['latest_reply_time'] = getTimeDifference($value['update_time']);

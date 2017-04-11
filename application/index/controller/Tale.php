@@ -8,7 +8,7 @@
 
 namespace app\index\controller;
 
-use think\Db;
+
 use think\Request;
 
 class Tale extends Base
@@ -24,13 +24,17 @@ class Tale extends Base
     {
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {
+            $uid = $request->param('uid', 0, 'intval');
+            $token = $request->param('token', '');
+            $page = $request->param('page', 1, 'intval');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
             $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
-            $tale_list = $service_tale->get_tale_list($long, $lat, $near_error);
+            $tale_list = $service_tale->get_tale_list($long, $lat, $near_error, $page, $uid, $token);
             if ($tale_list) {
-                data_format_json(0, $tale_list, 'success');
+//                data_format_json(0, $tale_list, 'success');
+                dump($tale_list);
             } else {
                 data_format_json(-1, '', '没有数据');
             }
@@ -108,30 +112,11 @@ class Tale extends Base
         $service_tale->create_tale($data);
     }
 
-    function test1()
-    {
-        for ($i = 0; $i < 100; $i++) {
-            Db::query("select * from nh_user where uid = 1");
-        }
-    }
-
-    function test2()
-    {
-        for ($i = 0; $i < 1; $i++) {
-            $this->test();
-        }
-    }
-
     function test3()
     {
         $a = rand(899222, 907056) / 1000000 + 118;
         $b = rand(904187, 918042) / 1000000 + 31;
         return $a . ',' . $b;
-    }
-
-    function test4()
-    {
-        getDistance();
     }
 
 }
