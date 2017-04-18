@@ -187,3 +187,15 @@ function getTimeDifference($time = 0)
     }
     return $result;
 }
+
+/**
+ * 对数据进行处理，不是正正数返回1
+ * @param $num
+ * @return int
+ */
+function positive_intval($num)
+{
+    $num = intval($num);
+    $num = $num > 0 ? $num : 1;
+    return $num;
+}
