@@ -26,7 +26,7 @@ class Tale extends Base
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {
             $uid = $request->param('uid', 0, 'intval');
             $token = $request->param('token', '');
-            $page = $request->param('page', 1, 'intval');
+            $page = $request->param('page', 1, 'intval') or data_format_json(-7, '', 'page is error');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
             $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
@@ -37,6 +37,7 @@ class Tale extends Base
             } else {
                 data_format_json(-1, '', '没有数据');
             }
+
         }
     }
 

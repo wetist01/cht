@@ -63,31 +63,96 @@ class Tale extends Base
     }
 
     /**
-     * 对附近的原始数据进行处理
-     * @param int $long 经度
-     * @param int $lat 纬度
-     * @param int $near_error 精度，默认6，代表附近2km
-     * @param int $page
+     * 获取tale_list
+     * @author kongjian
+     * @param Decimal $long 经度
+     * @param Decimal $lat 维度
+     * @param int $near_error 精度，如为6代表附近2km
+     * @param int $page 分页
+     * @param int $uid
+     * @param string $token
+     * @return array
+     */
+    function get_tale_list($long, $lat, $near_error, $page, $uid, $token)
+    {
+        if ($uid && $token) {//判断是否是登录用户
+            $tale_list = $this->get_tale_list_login($long, $lat, $near_error, $page, $uid, $token);
+        } else {
+            $tale_list = $this->get_tale_list_not_login($long, $lat, $near_error, $page);
+        }
+
+        return $tale_list;
+    }
+
+    /**
+     * 登录用户tale_list数据处理
+     * @author kongjian
+     * @param Decimal $long 经度
+     * @param Decimal $lat 维度
+     * @param int $near_error 精度，如为6代表附近2km
+     * @param int $page 分页 1除外的都返回空
+     * @param int $uid
+     * @param string $token
      * @return array|mixed
      */
-    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $page = 1, $uid, $token)
+    function get_tale_list_login($long, $lat, $near_error = 6, $page = 1, $uid, $token)
     {
-        if ($uid && $token) {//判断是否是登录用户,如果登录从缓存读取数据
-            $key = 'tale_list_login_' . $uid . '_' . $token;
-            $tale_list_cache = Cache::get($key);
+        $cache_key = 'tale_list_login_' . $uid . '_' . $token;
+
+        if ($page == 1) {
+            $model_tale = new \app\index\model\Tale();
+            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error);
+            Cache::set($cache_key, $tale_list, 3600);
+        } else {
+            $tale_list_cache = Cache::get($cache_key);
             if ($tale_list_cache) {
                 $tale_list = $tale_list_cache;
             } else {
-                $model_tale = new \app\index\model\Tale();
-                $tale_list = $model_tale->get_tale_list($long, $lat, $near_error);
-                Cache::set($key, $tale_list, 3600);
+                $tale_list = [];
             }
-        } else {
-            $model_tale = new \app\index\model\Tale();
-            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 20);
         }
 
-        if ($tale_list) {
+        $tale_list = $this->process_tale($tale_list, $long, $lat, $page);
+
+        return $tale_list;
+    }
+
+    /**
+     * 未登录用户tale_list数据处理
+     * @author kongjian
+     * @param Decimal $long 经度
+     * @param Decimal $lat 维度
+     * @param int $near_error 精度，如为6代表附近2km
+     * @param int $page 分页 1除外的都返回空
+     * @return array|mixed
+     */
+    function get_tale_list_not_login($long, $lat, $near_error = 6, $page = 1)
+    {
+        if ($page == 1) {
+            $model_tale = new \app\index\model\Tale();
+            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 20, 120);//todo
+        } else {
+            $tale_list = [];
+        }
+
+        $tale_list = $this->process_tale($tale_list, $long, $lat, $page);
+
+
+        return $tale_list;
+    }
+
+    /**
+     * 处理从model获取的tale原始数据
+     * @author kongjian
+     * @param array $tale_list
+     * @param $long
+     * @param $lat
+     * @param $page
+     * @return array
+     */
+    function process_tale($tale_list = [], $long = 0, $lat = 0, $page = 1)
+    {
+        if ($tale_list && $page > 0) {
             $tale_list = page_array($tale_list, $page, 20);
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);

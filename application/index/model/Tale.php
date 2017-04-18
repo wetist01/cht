@@ -41,9 +41,10 @@ class Tale extends Model
      * @param Decimal $lat 纬度
      * @param int $near_error 范围经度，默认为6，代表附近2km
      * @param int $limit
+     * @param int $cache_time
      * @return mixed
      */
-    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $limit = 100)
+    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $limit = 100, $cache_time = 120)
     {
         $key_redis = 'tale_list_' . substr(geohash_encode($long, $lat), 0, $near_error) . '_limit_' . $limit;
 
@@ -55,7 +56,7 @@ class Tale extends Model
             $neighbors = getNeighbors($long, $lat, $near_error);
             if ($neighbors) {
                 $tale_list = $this->query("SELECT * FROM nh_tale WHERE is_deleted = 0 AND left(geohash,$near_error) IN ($neighbors) ORDER BY update_time DESC limit $limit");
-                Cache::set($key_redis, $tale_list, 120);
+                Cache::set($key_redis, $tale_list, $cache_time);
             } else {
                 $tale_list = [];
             }
