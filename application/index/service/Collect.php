@@ -90,6 +90,8 @@ class Collect extends Base
             } else {
                 data_format_json(-2, '', 'result is empty');
             }
+        } else {
+            data_format_json(-2, '', 'result is empty');
         }
     }
 }
