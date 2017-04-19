@@ -9,11 +9,9 @@
 namespace app\index\model;
 
 
-use think\Model;
-
-class Like extends Model
+class Like extends Base
 {
     protected $pk = 'like_id';
 
-    protected $readonly = ['uid', 'tale_id', 'comment_id', 'create_time',];
+    protected $readonly = ['uid', 'tale_id', 'comment_id', 'create_time'];
 }

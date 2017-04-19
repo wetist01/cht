@@ -9,31 +9,12 @@
 namespace app\index\model;
 
 use think\Cache;
-use think\Model;
 
-class Comment extends Model
+class Comment extends Base
 {
     protected $pk = 'comment_id';
 
     protected $readonly = ['uid', 'tale_id', 'create_time', 'content'];
-
-    /**
-     * 查询公共方法
-     * @author kongjian
-     * @param null $where
-     * @param string $field
-     * @param int $type
-     * @return array|false|\PDOStatement|string|\think\Collection|Model
-     */
-    function fetchWhere($where = null, $field = '*', $type = 0)
-    {
-        if ($type == 0) {
-            $result = $this->where($where)->field($field)->select();
-        } else {
-            $result = $this->where($where)->field($field)->find();
-        }
-        return $result;
-    }
 
     /**
      * 判断tale_id,comment_id是否匹配
