@@ -15,7 +15,7 @@ class Like extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = ['createlike'];//需要token验证的action,小写
+        $token_allow = [];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -23,6 +23,7 @@ class Like extends Base
     {
         $request = Request::instance();
         $data['uid'] = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $data['liked_uid'] = $request->param('liked_uid', 0, 'intval') or data_format_json(-1, '', 'liked_uid is null');
         $data['tale_id'] = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
         $data['comment_id'] = $request->param('comment_id', 0, 'intval');
         $service_like = new \app\index\service\Like();
