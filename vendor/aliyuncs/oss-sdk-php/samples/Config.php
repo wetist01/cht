@@ -8,8 +8,8 @@
  */
 final class Config
 {
-    const OSS_ACCESS_ID = 'LTAIlOe2RKt0Bh6R';
-    const OSS_ACCESS_KEY = 'lBD3PKPjIZ6k9ZCZjdJAg8fDVovBdZ';
-    const OSS_ENDPOINT = 'oss-cn-shanghai.aliyuncs.com';
-    const OSS_TEST_BUCKET = 'nothave-test';
+    const OSS_ACCESS_ID = '';
+    const OSS_ACCESS_KEY = '';
+    const OSS_ENDPOINT = '';
+    const OSS_TEST_BUCKET = '';
 }
