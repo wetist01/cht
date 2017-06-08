@@ -19,6 +19,9 @@ class Like extends Base
         parent::_initialize($token_allow, $request);
     }
 
+    /**
+     * 点赞
+     */
     function createLike()
     {
         $request = Request::instance();
@@ -30,4 +33,26 @@ class Like extends Base
         $service_like->create_like($data);
     }
 
+    /**
+     * 获取被点咋列表
+     */
+    function likedList()
+    {
+        $request = Request::instance();
+        $liked_uid = $request->param('liked_uid', 0, 'intval') or data_format_json(-1, '', 'liked_uid is null');
+        $page = $request->param('page', 1, 'positive_intval');
+        $service_like = new \app\index\service\Like();
+        $service_like->get_liked_list($liked_uid, $page);
+    }
+
+    /**
+     * 通过被赞人的uid获取未读的被赞的数目
+     */
+    function likedNum()
+    {
+        $request = Request::instance();
+        $liked_uid = $request->param('liked_uid', 0, 'intval') or data_format_json(-1, '', 'liked_uid is null');
+        $service_like = new \app\index\service\Like();
+        $service_like->get_liked_num($liked_uid);
+    }
 }

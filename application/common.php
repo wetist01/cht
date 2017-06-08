@@ -199,3 +199,15 @@ function positive_intval($num)
     $num = $num > 0 ? $num : 1;
     return $num;
 }
+
+/**
+ * 将select产生的数据转换成纯数组数据
+ * @author kongjian
+ * @param $data
+ * @return mixed
+ */
+function jsonToArray($data)
+{
+    $data = json_decode(json_encode($data), true);
+    return $data;
+}
