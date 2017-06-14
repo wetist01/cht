@@ -113,7 +113,7 @@ class Like extends Base
             $list[$key]['create_time'] = getTimeDifference($val['create_time']);
         }
 
-        $m_like->isUpdate(true)->save(['is_read' => 1], ['liked_uid' => $liked_uid]);
+        $m_like->isUpdate(true)->save(['is_read' => 1], ['liked_uid' => $liked_uid]);//清空点赞提醒数
 
         data_format_json(0, $list, 'success');
     }
