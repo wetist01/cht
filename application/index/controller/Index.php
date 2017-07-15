@@ -11,7 +11,7 @@ class Index extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = [];//需要token验证的action,小写
+        $token_allow = ['upload_img_head'];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -34,11 +34,11 @@ class Index extends Base
         $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'head');
         if ($info) {
             $extension = $info->getSaveName();
-            $bucket = 'nothave-img';
+            $bucket = 'cht-img';
             $object = 'head/' . $extension;
             $file = 'uploads/head/' . $extension;
             if (upload_file_oss($bucket, $object, $file)) {
-                Db::table('nh_user')->where('uid', $uid)->setField('img_head', 'http://img.wetist.com/' . $object);
+                Db::table('cht_user')->where('uid', $uid)->setField('img_head', 'http://img.wetist.com/' . $object);
                 data_format_json(0, ['url' => 'http://img.wetist.com/' . $object], '上传成功');
             }
         } else {

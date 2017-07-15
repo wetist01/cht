@@ -9,7 +9,6 @@
 namespace app\index\controller;
 
 
-use think\Cache;
 use think\Request;
 
 class Comment extends Base
@@ -20,7 +19,7 @@ class Comment extends Base
         parent::_initialize($token_allow, $request);
     }
 
-    /**
+    /**\
      * 创建评论
      */
     function createComment()
@@ -51,8 +50,10 @@ class Comment extends Base
         $service_comment->get_comment_list_by_tale_id($data);
     }
 
-    function test()
+    function commentedList()
     {
-        Cache::clear('comment_list_tale_1');
+        $request = Request::instance();
+
     }
+
 }

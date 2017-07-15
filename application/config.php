@@ -187,7 +187,7 @@ return [
         // 驱动方式
         'type' => 'redis',
         // 缓存前缀
-        'prefix' => 'nh_',
+        'prefix' => 'cht_',
         // 缓存有效期 0表示永久缓存
         'expire' => 86400 * 30,
         // redis 服务器
@@ -207,7 +207,7 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'nothave',
+        'prefix'         => 'cht',
         // 驱动方式 支持redis memcache memcached
         'type'           => 'redis',
         // 是否自动开启 SESSION
@@ -227,7 +227,7 @@ return [
     // +----------------------------------------------------------------------
     'cookie'                 => [
         // cookie 名称前缀
-        'prefix'    => 'nh_',
+        'prefix'    => 'cht_',
         // cookie 保存时间
         'expire'    => 0,
         // cookie 保存路径

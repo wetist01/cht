@@ -34,10 +34,10 @@ class User extends Base
                     'mobile' => $mobile,
                     'sms_code' => $sms_code
                 ];
-                $create_time = Db::table('nh_login_sms_code')->where($data)->order('id', 'desc')->value('create_time');
+                $create_time = Db::table('cht_login_sms_code')->where($data)->order('id', 'desc')->value('create_time');
                 if ((abs(time() - $create_time) < 36000) || $sms_code == 111111) {//判断验证码是否过期 TODO 上线后改为300
                     //登录还是注册
-                    $uid = Db::table('nh_user')->where('mobile', $mobile)->value('uid');
+                    $uid = Db::table('cht_user')->where('mobile', $mobile)->value('uid');
                     if ($uid) {
                         //已注册，走登录接口
                         $result = $this->doLogin($uid);
@@ -61,7 +61,7 @@ class User extends Base
     {
         if ($mobile) {
             //自动生成昵称
-            $name = '没有了' . rand_number(4) . substr($mobile, 7, 10);
+            $name = '传话筒' . rand_number(4) . substr($mobile, 7, 10);
 
             //注册新用户
             $user = new \app\index\model\User();
@@ -84,7 +84,7 @@ class User extends Base
     private function doLogin($uid = 0)
     {
         if ($uid) {
-            $user = Db::table('nh_user')->where('uid', $uid)->find();
+            $user = Db::table('cht_user')->where('uid', $uid)->find();
 
             //获取token
             $token_content = mt_rand(10000, 99999) . "|" . $uid . "|" . $user['mobile'] . "|" . time();
@@ -92,13 +92,13 @@ class User extends Base
             $token = $class_xcrypt->encrypt($token_content);
 
             //token等存入缓存
-            $key_token = "nothave_user_auth_token_" . $uid . $user['mobile'];
+            $key_token = "cht_user_auth_token_" . $uid . $user['mobile'];
             Cache::set($key_token, $token, REDIS_EXPIRE_TIME_TOKEN);
             $data = [
                 'uid' => $uid,
                 'token' => $token
             ];
-            Db::table('nh_user')->where('uid', $uid)->setField('lastlogin_time', time());
+            Db::table('cht_user')->where('uid', $uid)->setField('lastlogin_time', time());
             $result = $data;
         } else {
             $result = '';
@@ -122,7 +122,7 @@ class User extends Base
             $mobile = $request->param('mobile', '');
             if (is_mobile_num($mobile)) {
                 $data = ['mobile' => $mobile, 'sms_code' => $sms_code, 'create_time' => time()];
-                $id = Db::table('nh_login_sms_code')->insertGetId($data);
+                $id = Db::table('cht_login_sms_code')->insertGetId($data);
                 if ($id) {
                     send_sms($mobile, $content);
                     data_format_json(0, '', '发送成功');
@@ -144,11 +144,11 @@ class User extends Base
         $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'head');
         if ($info) {
             $extension = $info->getSaveName();
-            $bucket = 'nothave-img';
+            $bucket = 'cht-img';
             $object = 'head/' . $extension;
             $file = 'uploads/head/' . $extension;
             if (upload_file_oss($bucket, $object, $file)) {
-                Db::table('nh_user')->where('uid', $uid)->setField('img_head', 'http://img.wetist.com/' . $object);
+                Db::table('cht_user')->where('uid', $uid)->setField('img_head', 'http://img.wetist.com/' . $object);
                 data_format_json(0, ['head_url' => 'http://img.wetist.com/' . $object], '上传成功');
             }
         } else {

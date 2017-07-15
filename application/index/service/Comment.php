@@ -24,7 +24,7 @@ class Comment extends Base
             data_format_json(-100, '', 'data is empty');
         }
         $m_user = new \app\index\model\User();
-        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'name,sex,img_head', 1);
+        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'user_name,sex,img_head', 1);
         $data['user_name'] = $user_info['user_name'];
         $data['img_head'] = $user_info['img_head'];
         $data['sex'] = $user_info['sex'];
@@ -112,6 +112,11 @@ class Comment extends Base
         }
 
         data_format_json(0, $result, 'success');
+    }
+
+    function get_comment_list_by_commented_uid()
+    {
+
     }
 
 }
