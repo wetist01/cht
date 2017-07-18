@@ -88,4 +88,19 @@ class Comment extends Base
             return $comment_list;
         }
     }
+
+    /**
+     * 根据被评论的uid获取被评论的数目
+     * @author kongjian
+     * @param $commented_uid 被评论的uid，一般就传登录用户的uid，获取被评论的数目
+     * @return int|string
+     */
+    function get_commented_unread_num($commented_uid)
+    {
+        $where['commented_uid'] = $commented_uid;
+        $where['uid'] = ['neq', $commented_uid];
+        $where['is_read'] = 0;
+        $num = $this->where($where)->count();
+        return $num;
+    }
 }

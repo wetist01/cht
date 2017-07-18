@@ -114,6 +114,19 @@ class Comment extends Base
         data_format_json(0, $result, 'success');
     }
 
+    /**
+     * 获取评论我的未读的数目
+     * @author kongjian
+     * @param $commented_uid
+     * @return int|string
+     */
+    function get_commented_unread_num($commented_uid)
+    {
+        $m_comment = new \app\index\model\Comment();
+        $commented_num = $m_comment->get_commented_unread_num($commented_uid);
+        data_format_json(0, 'commented_num is:' . $commented_num, 'success');
+    }
+
     function get_comment_list_by_commented_uid()
     {
 

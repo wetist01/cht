@@ -26,6 +26,7 @@ class Comment extends Base
     {
         $request = Request::instance();
         $data['uid'] = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $data['commented_uid'] = $request->param('commented_uid', 0, 'intval') or data_format_json(-1, '', 'commented_uid is null');
         $data['comment_id'] = $request->param('comment_id', 0, 'intval');
         $data['tale_id'] = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
         $data['content'] = $request->param('content', '') or data_format_json(-1, '', 'content is null');
@@ -50,6 +51,20 @@ class Comment extends Base
         $service_comment->get_comment_list_by_tale_id($data);
     }
 
+    /**
+     * 未读的评论数
+     */
+    function commentedUnreadNum()
+    {
+        $request = Request::instance();
+        $commented_uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $service_comment = new \app\index\service\Comment();
+        $service_comment->get_commented_unread_num($commented_uid);
+    }
+
+    /**
+     * 被评论的列表
+     */
     function commentedList()
     {
         $request = Request::instance();
