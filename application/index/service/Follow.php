@@ -38,4 +38,31 @@ class Follow extends Base
             data_format_json(-3, '数据库写入错误');
         }
     }
+
+    /**
+     * 我的关注
+     * @author kongjian
+     * @param int $uid
+     */
+    function follow_list($uid)
+    {
+        $m_follow = new \app\index\model\Follow();
+        $followed_uid = $m_follow->get_followed_uid_by_uid($uid);
+
+        $range = implode(',', $followed_uid);
+
+        $where['uid'] = ['in', $range];
+        $where['status'] = 0;
+        $where['is_deleted'] = 0;
+
+        $field = 'uid,user_name,img_head,sex,school,city';
+
+        $m_user = new \app\index\model\User();
+        $list = $m_user->fetchWhere($where, $field);
+
+        $list = jsonToArray($list);
+
+        data_format_json(0, $list, 'success');
+    }
+
 }

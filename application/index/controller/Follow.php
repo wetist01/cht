@@ -30,4 +30,15 @@ class Follow extends Base
         $service_follow = new \app\index\service\Follow();
         $service_follow->create_follow($uid, $followed_uid);
     }
+
+    /**
+     * 我的关注
+     */
+    function followList()//TODO 分页
+    {
+        $request = Request::instance();
+        $uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $service_follow = new \app\index\service\Follow();
+        $service_follow->follow_list($uid);
+    }
 }

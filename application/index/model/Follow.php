@@ -29,4 +29,24 @@ class Follow extends Base
         $follow_id = $this->follow_id;
         return $follow_id;
     }
+
+    /**
+     *获取我关注的用户的uid
+     * @author kongjian
+     * @param int $uid
+     * @return array
+     */
+    function get_followed_uid_by_uid($uid)
+    {
+        $where['uid'] = $uid;
+        $followed_uid = $this->where($where)->field('followed_uid')->select();
+        $followed_uid = jsonToArray($followed_uid);
+
+        foreach ($followed_uid as $key => $value) {
+            $followed_uid[$key] = $value['followed_uid'];
+        }
+
+        return $followed_uid;
+    }
+
 }
