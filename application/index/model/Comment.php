@@ -118,7 +118,23 @@ class Comment extends Base
         $where['uid'] = ['neq', $commented_uid];
         $where['is_deleted'] = 0;
         $where['status'] = 0;
-        $field = 'comment_id,tale_id,is_anon,uid,user_name,img_head,content,create_time,status';
+        $field = 'comment_id,tale_id,is_anon,uid,user_name,img_head,content,create_time';
+        $list = $this->where($where)->order('comment_id', 'desc')->limit(10)->field($field)->select();
+        return $list;
+    }
+
+    /**
+     * 获取我评论的列表
+     * @author kongjian
+     * @param int $uid
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    function get_my_comment_list($uid)
+    {
+        $where['uid'] = $uid;
+        $where['is_deleted'] = 0;
+        $where['status'] = 0;
+        $field = 'comment_id,tale_id,uid,user_name,img_head,content,create_time';
         $list = $this->where($where)->order('comment_id', 'desc')->limit(10)->field($field)->select();
         return $list;
     }

@@ -148,4 +148,22 @@ class Comment extends Base
 
         data_format_json(0, $list, 'success');
     }
+
+    /**
+     * 获取我评论的列表
+     * @author kongjian
+     * @param int $uid
+     */
+    function get_my_comment_list($uid)
+    {
+        $m_comment = new \app\index\model\Comment();
+        $list = $m_comment->get_my_comment_list($uid);
+        $list = jsonToArray($list);
+
+        foreach ($list as $key => $value) {
+            $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
+        }
+
+        data_format_json(0, $list, 'success');
+    }
 }
