@@ -63,12 +63,14 @@ class Comment extends Base
     }
 
     /**
-     * 被评论的列表
+     * 评论我的列表
      */
     function commentedList()
     {
         $request = Request::instance();
-
+        $commented_uid = $request->param('commented_uid', 0, 'intval') or data_format_json(-1, '', 'commented_uid is null');
+        $service_comment = new \app\index\service\Comment();
+        $service_comment->get_commented_list($commented_uid);
     }
 
 }

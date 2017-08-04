@@ -92,7 +92,7 @@ class Comment extends Base
     /**
      * 根据被评论的uid获取被评论的数目
      * @author kongjian
-     * @param $commented_uid 被评论的uid，一般就传登录用户的uid，获取被评论的数目
+     * @param int $commented_uid 被评论的uid，一般就传登录用户的uid，获取被评论的数目
      * @return int|string
      */
     function get_commented_unread_num($commented_uid)
@@ -100,7 +100,26 @@ class Comment extends Base
         $where['commented_uid'] = $commented_uid;
         $where['uid'] = ['neq', $commented_uid];
         $where['is_read'] = 0;
+        $where['is_deleted'] = 0;
+        $where['status'] = 0;
         $num = $this->where($where)->count();
         return $num;
+    }
+
+    /**
+     * 获取被评论的评论列表
+     * @author kongjian
+     * @param int $commented_uid
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    function get_commented_list($commented_uid)
+    {
+        $where['commented_uid'] = $commented_uid;
+        $where['uid'] = ['neq', $commented_uid];
+        $where['is_deleted'] = 0;
+        $where['status'] = 0;
+        $field = 'comment_id,tale_id,is_anon,uid,user_name,img_head,content,create_time,status';
+        $list = $this->where($where)->order('comment_id', 'desc')->limit(10)->field($field)->select();
+        return $list;
     }
 }

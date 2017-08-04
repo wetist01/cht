@@ -191,7 +191,7 @@ return [
         // 缓存有效期 0表示永久缓存
         'expire' => 86400 * 30,
         // redis 服务器
-        'host' => \think\Env::get('cache.host','120.25.103.10'),
+        'host' => \think\Env::get('cache.host','106.14.6.203'),
         // 密码
         'password'   => 'jit2017!',
         // redis 服务器端口
@@ -213,7 +213,7 @@ return [
         // 是否自动开启 SESSION
         'auto_start'     => true,
         //host
-        'host'       => \think\Env::get('cache.host','120.25.103.10'),
+        'host'       => \think\Env::get('cache.host','106.14.6.203'),
         // redis端口
         'port'       => 6379,
         // 密码

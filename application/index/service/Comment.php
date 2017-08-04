@@ -127,9 +127,25 @@ class Comment extends Base
         data_format_json(0, 'commented_num is:' . $commented_num, 'success');
     }
 
-    function get_comment_list_by_commented_uid()
+    /**
+     * 获取评论我的评论列表
+     * @author kongjian
+     * @param int $commented_uid 被评论的uid，一般传登录用户的uid
+     */
+    function get_commented_list($commented_uid)
     {
+        $m_comment = new \app\index\model\Comment();
+        $list = $m_comment->get_commented_list($commented_uid);
+        $list = jsonToArray($list);
 
+        foreach ($list as $key => $value) {
+            if ($list[$key]['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
+                $list[$key]['user_name'] = '匿名用户';
+            }
+
+            $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
+        }
+
+        data_format_json(0, $list, 'success');
     }
-
 }
