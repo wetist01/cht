@@ -112,25 +112,4 @@ class Tale extends Base
         }
     }
 
-    function test()
-    {
-        $a = $this->test3();
-        $data['uid'] = 1;
-        $data['longitude'] = explode(',', $a)[0];
-        $data['latitude'] = explode(',', $a)[1];
-        $data['description'] = 1111111111111111111;
-        $data['is_anon'] = 1;
-        $data['type'] = rand(1, 2);
-        $data['img'] = 'http://img.wetist.com/head/20170216/cc8789ea850e328123bff6b6b4380ae9.JPG';
-        $service_tale = new \app\index\service\Tale();
-        $service_tale->create_tale($data);
-    }
-
-    function test3()
-    {
-        $a = rand(899222, 907056) / 1000000 + 118;
-        $b = rand(904187, 918042) / 1000000 + 31;
-        return $a . ',' . $b;
-    }
-
 }
