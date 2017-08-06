@@ -185,4 +185,11 @@ class User extends Base
         ];
         data_format_json(0, $result, 'success');
     }
+
+    function profileEdit()
+    {
+
+    }
+
+
 }

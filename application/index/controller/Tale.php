@@ -41,6 +41,14 @@ class Tale extends Base
         }
     }
 
+    /**
+     * 热门
+     */
+    function taleListHot()//TODO
+    {
+        $this->taleList();
+    }
+
     //获取单条吐槽详情
     function taleInfo()
     {
