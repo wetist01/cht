@@ -69,6 +69,20 @@ class Tale extends Base
         }
     }
 
+    /**
+     * 我发布的
+     */
+    function myTaleList()
+    {
+        $request = Request::instance();
+        $uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $page = $request->param('page', 1, 'positive_intval');
+        $long = $request->param('longitude', null, 'floatval') or data_format_json(-1, '', 'longitude is null');
+        $lat = $request->param('latitude', null, 'floatval') or data_format_json(-1, '', 'latitude is null');
+        $service_tale = new \app\index\service\Tale();
+        $service_tale->my_tale_list($uid, $page, $long, $lat);
+    }
+
     //删除吐槽
     function deleteTale()//TODO
     {

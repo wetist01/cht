@@ -202,4 +202,29 @@ class Tale extends Base
         }
     }
 
+    /**
+     * 我发布的
+     * @author kongjian
+     * @param int $uid
+     * @param int $page 分页
+     * @param float $long 经度
+     * @param float $lat 纬度
+     */
+    function my_tale_list($uid, $page, $long, $lat)
+    {
+        $where['uid'] = $uid;
+        $m_tale = new \app\index\model\Tale();
+        $list = $m_tale->my_tale_list($uid, $page);
+        if ($list) {
+            foreach ($list as $key => $value) {
+                $list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
+                $list['latest_reply_time'] = getTimeDifference($value['update_time']);
+            }
+            data_format_json(0, $list, 'success');
+
+        } else {
+            data_format_json(-3, '', 'return is null');
+        }
+    }
+
 }

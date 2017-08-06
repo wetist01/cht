@@ -94,4 +94,22 @@ class Tale extends Base
         }
         return $like_num;
     }
+
+    /**
+     * 我发布的
+     * @author kongjian
+     * @param int $uid
+     * @param int $page 分页
+     * @return array
+     */
+    function my_tale_list($uid, $page)
+    {
+        $where['uid'] = $uid;
+        $where['status'] = 0;
+        $where['is_deleted'] = 0;
+        $field = 'tale_id,uid,user_name,sex,img_head,longitude,latitude,like_num,comment_num,description,type,img,update_time';
+        $list = $this->where($where)->order('tale_id', 'desc')->page($page, 10)->field($field)->select();
+        $list = jsonToArray($list);
+        return $list;
+    }
 }
