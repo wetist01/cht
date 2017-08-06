@@ -109,7 +109,16 @@ class User extends Base
     //登出接口
     function logout()
     {
+        $request = Request::instance();
+        $token = $request->param('token');
 
+        $class_xcrypt = new \common\lib\Xcrypt(INTERFACE_KEY, "ofb", INTERFACE_KEY);
+        $result = $class_xcrypt->decrypt($token);
+        $result_arr = explode("|", $result);
+
+        $key_token = "cht_user_auth_token_" . $result_arr[1] . $result_arr[2];
+        Cache::rm($key_token);
+        data_format_json(0, $key_token, 'success');
     }
 
     //获取短信验证码接口

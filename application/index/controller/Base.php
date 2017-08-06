@@ -5,6 +5,7 @@
  * Date: 2017/1/21
  * Time: 13:23
  */
+
 namespace app\index\controller;
 
 use think\Cache;
@@ -29,11 +30,11 @@ class Base extends Controller
         }
 
         // 常量定义
-        $protocol  = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $abis_this_url  = "$protocol $_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        define('__CHT_THIS_URL__', $abis_this_url );
-        $_root  = rtrim(dirname(rtrim($_SERVER['SCRIPT_NAME'], '/')), '/');
-        define('__CHT_ROOT__', (($_root  == '/' || $_root  == '\\') ? '' : $_root ));
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $abis_this_url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        define('__CHT_THIS_URL__', $abis_this_url);
+        $_root = rtrim(dirname(rtrim($_SERVER['SCRIPT_NAME'], '/')), '/');
+        define('__CHT_ROOT__', (($_root == '/' || $_root == '\\') ? '' : $_root));
         define('__CHT_APP__', __CHT_ROOT__ . '/application');
         define('__CHT_STATIC__', __CHT_ROOT__ . '/static');
         define('__CHT_MODULE__', __CHT_ROOT__ . '/' . request()->module());
