@@ -174,21 +174,30 @@ class User extends Base
         $m_user = new \app\index\model\User();
         $user_info = $m_user->where('uid', $uid)->field('img_head, user_name, points, sex')->find();//TODO 增加学校
         $result = [
-            'name' => $user_info->user_name,
+            'user_name' => $user_info->user_name,
             'img_head' => $user_info->img_head,
-            'points' => $user_info->points,
             'sex' => $user_info->getData('sex'),
             'sex_info' => $user_info->sex,
             'school' => '家里蹲大学',
-            'faculty' => '光棍学院',
-            'student_authentication' => 0
+            'city' => '南京',
+            'company' => '好公司',
+            'profession' => '混吃等死'
         ];
         data_format_json(0, $result, 'success');
     }
 
+    /**
+     * 编辑个人资料
+     */
     function profileEdit()
     {
+        $request = Request::instance();
+        $category = $request->param('category', 0, 'intval') or data_format_json(-1, '', 'category is err');
+        $uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $content = $request->param('content') or data_format_json(-1, '', 'content is null');
 
+        $service_user = new \app\index\service\User();
+        $service_user->profile_edit($uid, $category, $content);
     }
 
 
