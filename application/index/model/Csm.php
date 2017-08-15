@@ -1,7 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: wetist
+ * 传送门模型
+ * User: kongjian
  * Date: 2017/8/16
  * Time: 01:00
  */
