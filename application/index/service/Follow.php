@@ -60,8 +60,6 @@ class Follow extends Base
         $m_user = new \app\index\model\User();
         $list = $m_user->fetchWhere($where, $field);
 
-        $list = jsonToArray($list);
-
         data_format_json(0, $list, 'success');
     }
 

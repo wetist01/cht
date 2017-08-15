@@ -13,7 +13,11 @@ use think\Cache;
 
 class Tale extends Base
 {
-    //创建吐槽
+    /**
+     * 创建吐槽
+     * @author kongjian
+     * @param array $data
+     */
     function create_tale($data = [])
     {
         if ($data['type'] == 1) {
@@ -45,7 +49,11 @@ class Tale extends Base
         }
     }
 
-    //删除吐槽
+    /**
+     * 删除吐槽
+     * @author kongjian
+     * @param array $where
+     */
     function delete_tale($where = [])
     {
         if ($where['tale_id']) {
@@ -184,7 +192,6 @@ class Tale extends Base
         $field = 'tale_id,uid,user_name,sex,img_head,like_num,comment_num,description,is_anon,type,img,update_time,longitude,latitude';
         $info = $m_tale->fetchWhere($where, $field, 1);
         if ($info) {
-            $info = json_decode(json_encode($info), true);
 
             if ($info['is_anon'] == 1) {
                 $info['user_name'] = '匿名';

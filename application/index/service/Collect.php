@@ -74,7 +74,6 @@ class Collect extends Base
             $m_tale = new \app\index\model\Tale();
             $tale_list = $m_tale->fetchWhere($where, '*');
             if ($tale_list) {
-                $tale_list = json_decode(json_encode($tale_list), true);
 
                 foreach ($tale_list as $key => $value) {
                     $tale_list[$key]['latest_reply_time'] = getTimeDifference($value['update_time']);
