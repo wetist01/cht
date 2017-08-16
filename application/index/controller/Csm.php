@@ -28,4 +28,18 @@ class Csm extends Base
         $service_csm->csm_list();
     }
 
+    /**
+     * 传送门详情
+     */
+    function csmTaleList()
+    {
+        $request = Request::instance();
+        $page = $request->param('page', 1, 'positive_intval');
+        $csm_id = $request->param('csm_id', 0, 'intval') or data_format_json(-1, '', 'csm_id is err');
+        $user_long = $request->param('longitude', null, 'floatval') or data_format_json(-1, '', 'longitude is null');
+        $user_lat = $request->param('latitude', null, 'floatval') or data_format_json(-1, '', 'latitude is null');
+
+        $service_csm = new \app\index\service\Csm();
+        $service_csm->csm_tale_list($csm_id, $user_long, $user_lat, $page);
+    }
 }

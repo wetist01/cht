@@ -18,6 +18,7 @@ class Tale extends Base
 
     /**
      * 获取附近原始数据
+     * @author kongjian
      * @param Decimal $long 经度
      * @param Decimal $lat 纬度
      * @param int $near_error 范围经度，默认为6，代表附近2km
@@ -48,6 +49,7 @@ class Tale extends Base
 
     /**
      * 判断uid,tale_id是否匹配
+     * @author kongjian
      * @param int $uid
      * @param int $tale_id
      * @return int
@@ -77,6 +79,7 @@ class Tale extends Base
 
     /**
      * 改变like_num值
+     * @author kongjian
      * @param $tale_id
      * @param int $type 1自增，2自减
      * @return int|true|false

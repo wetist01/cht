@@ -172,6 +172,12 @@ class Tale extends Base
 
                 unset($tale_list[$key]['longitude']);
                 unset($tale_list[$key]['latitude']);
+                unset($tale_list[$key]['create_time']);
+                unset($tale_list[$key]['update_time']);
+                unset($tale_list[$key]['delete_time']);
+                unset($tale_list[$key]['is_deleted']);
+                unset($tale_list[$key]['status']);
+                unset($tale_list[$key]['geohash']);
             }
         } else {
             $tale_list = [];
