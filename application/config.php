@@ -17,9 +17,9 @@ return [
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => \think\Env::get('app_debug',true),
     // 应用Trace
-    'app_trace'              => true,
+    'app_trace'              => \think\Env::get('app_trace',true),
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -191,9 +191,9 @@ return [
         // 缓存有效期 0表示永久缓存
         'expire' => 86400 * 30,
         // redis 服务器
-        'host' => \think\Env::get('cache.host','106.14.6.203'),
+        'host' => \think\Env::get('redis.host','106.14.6.203'),
         // 密码
-        'password'   => 'jit2017!',
+        'password'   => '',
         // redis 服务器端口
         'port' => '6379'
     ],
@@ -213,11 +213,11 @@ return [
         // 是否自动开启 SESSION
         'auto_start'     => true,
         //host
-        'host'       => \think\Env::get('cache.host','106.14.6.203'),
+        'host'       => \think\Env::get('redis.host','106.14.6.203'),
         // redis端口
         'port'       => 6379,
         // 密码
-        'password'   => 'jit2017!',
+        'password'   => '',
         //过期时间
         'expire' => 3600,
     ],
