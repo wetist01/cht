@@ -27,7 +27,7 @@ class Follow extends Base
         $is_exist = $m_follow->where($where)->find();
 
         if ($is_exist) {
-            data_format_json(-2, '', '已经点赞过');
+            data_format_json(-2, '', '已经关注过');
         }
 
         $follow_id = $m_follow->create_follow($uid, $followed_uid);
