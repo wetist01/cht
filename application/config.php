@@ -191,7 +191,7 @@ return [
         // 缓存有效期 0表示永久缓存
         'expire' => 86400 * 30,
         // redis 服务器
-        'host' => \think\Env::get('redis.host','106.14.6.203'),
+        'host' => \think\Env::get('redis.host','106.14.6.20'),
         // 密码
         'password'   => '',
         // redis 服务器端口
