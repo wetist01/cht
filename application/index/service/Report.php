@@ -19,15 +19,21 @@ class Report extends Base
     function create_report($data)
     {
         if ($data['reported_uid']) {
+
             $this->create_report_user($data['uid'], $data['reported_uid'], $data['description']);
-        }
 
-        if ($data['tale_id']) {
+        } elseif ($data['tale_id']) {
+
             $this->create_report_tale($data['uid'], $data['tale_id'], $data['description']);
-        }
 
-        if ($data['comment_id']) {
+        } elseif ($data['comment_id']) {
+
             $this->create_report_comment($data['uid'], $data['comment_id'], $data['description']);
+
+        } else {
+
+            data_format_json(-1, '', '未传入report_uid,tale_id,comment_id中的任意一个');
+
         }
 
     }
