@@ -39,12 +39,10 @@ class Tale extends Base
         $data['user_name'] = $user_info['user_name'];
         $data['img_head'] = $user_info['img_head'];
         $data['sex'] = $user_info['sex'];
-        echo $data['sex'];
 
         $m_tale = new \app\index\model\Tale();
 
         if ($m_tale->allowField(true)->save($data)) {
-            echo $m_tale->getLastSql();exit;
             data_format_json(0, '', '创建成功');
         } else {
             data_format_json(-1, '', '创建失败，请稍后重试');

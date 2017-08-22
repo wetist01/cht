@@ -15,12 +15,6 @@ class User extends Base
 
     protected $insert = ['ip'];
 
-    public function getSexAttr($value)
-    {
-        $sex = [0 => '女', 1 => '男', 2 => '未知'];
-        return $sex[$value];
-    }
-
     protected function setIpAttr()
     {
         return request()->ip();

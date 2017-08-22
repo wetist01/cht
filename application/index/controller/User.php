@@ -176,8 +176,7 @@ class User extends Base
         $result = [
             'user_name' => $user_info->user_name,
             'img_head' => $user_info->img_head,
-            'sex' => $user_info->getData('sex'),
-            'sex_info' => $user_info->sex,
+            'sex' => $user_info->sex,
             'school' => '家里蹲大学',
             'city' => '南京',
             'company' => '好公司',
