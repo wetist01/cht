@@ -32,7 +32,7 @@ class Report extends Base
 
         } else {
 
-            data_format_json(-1, '', '未传入report_uid,tale_id,comment_id中的任意一个');
+            data_format_json(-1, '', '未传入reported_uid,tale_id,comment_id中的任意一个');
 
         }
 
