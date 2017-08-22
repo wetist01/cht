@@ -35,7 +35,7 @@ class Tale extends Base
         $data['geohash'] = geohash_encode($data['longitude'], $data['latitude']);
 
         $m_user = new \app\index\model\User();
-        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'name,sex,img_head', 1);
+        $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'user_name,sex,img_head', 1);
         $data['user_name'] = $user_info['user_name'];
         $data['img_head'] = $user_info['img_head'];
         $data['sex'] = $user_info['sex'];
