@@ -193,7 +193,7 @@ return [
         // redis 服务器
         'host' => \think\Env::get('redis.host','106.14.6.203'),
         // 密码
-        'password'   => '',
+        'password'   => 'kongjian2017',
         // redis 服务器端口
         'port' => '6379'
     ],
@@ -217,7 +217,7 @@ return [
         // redis端口
         'port'       => 6379,
         // 密码
-        'password'   => '',
+        'password'   => 'kongjian2017',
         //过期时间
         'expire' => 3600,
     ],
