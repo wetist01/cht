@@ -231,7 +231,7 @@ class Tale extends Base
         if ($list) {
             foreach ($list as $key => $value) {
                 $list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
-                $list['latest_reply_time'] = getTimeDifference($value['update_time']);
+                $list[$key]['latest_reply_time'] = getTimeDifference($value['update_time']);
             }
             data_format_json(0, $list, 'success');
 
