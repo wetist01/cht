@@ -28,7 +28,7 @@ class Collect extends Base
             $m_collect->allowField(true)->save();
             $collect_id = $m_collect->collect_id;
 
-            data_format_json(0, 'collect_id:' . $collect_id, 'success');
+            data_format_json(0, ['collect_id' => $collect_id], 'success');
         }
     }
 

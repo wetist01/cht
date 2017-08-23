@@ -33,7 +33,7 @@ class Follow extends Base
         $follow_id = $m_follow->create_follow($uid, $followed_uid);
 
         if (intval($follow_id)) {
-            data_format_json(0, 'follow_id:' . $follow_id, 'success');
+            data_format_json(0, ['follow_id' => $follow_id], 'success');
         } else {
             data_format_json(-3, '数据库写入错误');
         }

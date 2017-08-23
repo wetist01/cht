@@ -51,7 +51,7 @@ class Comment extends Base
             $m_tale = new \app\index\model\Tale();
             $m_tale->change_comment_num($data['tale_id']);//改变tale表中的评论数以及更新时间
             Cache::clear('comment_list_tale_' . $data['tale_id']);
-            data_format_json(0, 'comment_id:' . $m_comment->comment_id, 'success');
+            data_format_json(0, ['comment_id' => $m_comment->comment_id], 'success');
         } else {
             data_format_json(-101, '', 'mysql insert fail');
         }
@@ -84,7 +84,7 @@ class Comment extends Base
                 $m_tale->change_comment_num($data['tale_id']);//改变tale表中的评论数以及更新时间
                 $m_comment->change_comment_num($parent_comment_id);//改变comment表中被评论的那条记录的评论数
                 Cache::clear('comment_list_tale_' . $data['tale_id']);
-                data_format_json(0, 'comment_id:' . $comment_id, 'success');
+                data_format_json(0, ['comment_id' => $comment_id], 'success');
             } else {
                 data_format_json(-101, '', 'mysql insert fail');
             }
@@ -124,7 +124,7 @@ class Comment extends Base
     {
         $m_comment = new \app\index\model\Comment();
         $commented_num = $m_comment->get_commented_unread_num($commented_uid);
-        data_format_json(0, 'commented_num is:' . $commented_num, 'success');
+        data_format_json(0, ['commented_num' => $commented_num], 'success');
     }
 
     /**

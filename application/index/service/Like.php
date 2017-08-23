@@ -50,7 +50,7 @@ class Like extends Base
                 $m_tale = new \app\index\model\Tale();
                 $like_num = $m_tale->change_tale_like_num($data['tale_id']);
                 if ($like_num) {
-                    data_format_json(0, 'like_num:' . $like_num, 'success');
+                    data_format_json(0, ['like_num' => $like_num], 'success');
                 } else {
                     data_format_json(-2, '', '无法获取like_num');
                 }
@@ -84,7 +84,7 @@ class Like extends Base
                 $m_comment = new \app\index\model\Comment();
                 $like_num = $m_comment->change_comment_like_num($data['comment_id']);
                 if ($like_num) {
-                    data_format_json(0, 'like_num:' . $like_num, 'success');
+                    data_format_json(0, ['like_num' => $like_num], 'success');
                 } else {
                     data_format_json(-2, '', '无法获取like_num');
                 }
@@ -129,6 +129,6 @@ class Like extends Base
         $where['is_read'] = 0;
         $where['is_deleted'] = 0;
         $liked_num = $m_like->where($where)->count();
-        data_format_json(0, $liked_num, 'success');
+        data_format_json(0, ['liked_num' => $liked_num], 'success');
     }
 }

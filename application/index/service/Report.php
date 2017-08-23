@@ -55,7 +55,7 @@ class Report extends Base
         $m_report->allowField(true)->save($data);
         $report_id = $m_report->report_id;
         if ($report_id) {
-            data_format_json(0, 'report_id=' . $report_id, 'success');
+            data_format_json(0, ['report_id' => $report_id], 'success');
         } else {
             data_format_json(-2, '', '数据库错误');
         }
@@ -87,7 +87,7 @@ class Report extends Base
             $m_report->allowField(true)->save($data);
             $report_id = $m_report->report_id;
             if ($report_id) {
-                data_format_json(0, 'report_id=' . $report_id, 'success');
+                data_format_json(0, ['report_id' => $report_id], 'success');
             } else {
                 data_format_json(-2, '', '数据库错误');
             }
@@ -127,7 +127,7 @@ class Report extends Base
             $report_id = $m_report->report_id;
 
             if ($report_id) {
-                data_format_json(0, 'report_id=' . $report_id, 'success');
+                data_format_json(0, ['report_id' => $report_id], 'success');
             } else {
                 data_format_json(-2, '', '数据库错误');
             }
