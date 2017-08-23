@@ -113,7 +113,7 @@ class Tale extends Base
             $object = 'tale/' . $extension;
             $file = 'uploads/tale/' . $extension;
             if (upload_file_oss($bucket, $object, $file)) {
-                data_format_json(0, ['image_url' => 'http://img.wetist.com/' . $object], '上传成功');
+                data_format_json(0, ['image_url' => 'http://img.chuanhuatong.cc/' . $object], '上传成功');
             }
         } else {
             data_format_json(-100, $file->getError(), '服务异常');

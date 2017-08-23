@@ -38,8 +38,8 @@ class Index extends Base
             $object = 'head/' . $extension;
             $file = 'uploads/head/' . $extension;
             if (upload_file_oss($bucket, $object, $file)) {
-                Db::table('cht_user')->where('uid', $uid)->setField('img_head', 'http://img.wetist.com/' . $object);
-                data_format_json(0, ['url' => 'http://img.wetist.com/' . $object], '上传成功');
+                Db::table('cht_user')->where('uid', $uid)->setField('img_head', 'http://img.chuanhuatong.cc/' . $object);
+                data_format_json(0, ['url' => 'http://img.chuanhuatong.cc/' . $object], '上传成功');
             }
         } else {
             echo $file->getError();
