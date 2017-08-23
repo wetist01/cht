@@ -68,7 +68,7 @@ class Comment extends Base
     function commentedList()
     {
         $request = Request::instance();
-        $commented_uid = $request->param('commented_uid', 0, 'intval') or data_format_json(-1, '', 'commented_uid is null');
+        $commented_uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
         $service_comment = new \app\index\service\Comment();
         $service_comment->get_commented_list($commented_uid);
     }
