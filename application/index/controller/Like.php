@@ -39,7 +39,7 @@ class Like extends Base
     function likedList()
     {
         $request = Request::instance();
-        $liked_uid = $request->param('liked_uid', 0, 'intval') or data_format_json(-1, '', 'liked_uid is null');
+        $liked_uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
         $page = $request->param('page', 1, 'positive_intval');
         $service_like = new \app\index\service\Like();
         $service_like->get_liked_list($liked_uid, $page);
@@ -51,7 +51,7 @@ class Like extends Base
     function likedNum()
     {
         $request = Request::instance();
-        $liked_uid = $request->param('liked_uid', 0, 'intval') or data_format_json(-1, '', 'liked_uid is null');
+        $liked_uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
         $service_like = new \app\index\service\Like();
         $service_like->get_liked_num($liked_uid);
     }
