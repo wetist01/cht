@@ -207,5 +207,4 @@ class User extends Base
         $service_user->wxapp_login($code);
     }
 
-
 }
