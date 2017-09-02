@@ -9,6 +9,10 @@
 namespace app\index\service;
 
 
+use think\Cache;
+use think\Db;
+use common\lib\Xcrypt;
+
 class User extends Base
 {
     /**
@@ -77,13 +81,68 @@ class User extends Base
 
     function wxapp_login($code)
     {
-        $url = 'https://api.weixin.qq.com/sns/jscode2session';
+        $wx_open = $this->getOpenid($code);
+        $openid = $wx_open->openid;
+
+        $m_user = new \app\index\model\User();
+        $where['openid'] = $openid;
+        $uid = $m_user->where($where)->value('uid');
+        if ($uid) {
+            //已注册，走登录接口
+            $this->doLogin($uid);
+        } else {
+            //未注册，走注册接口
+            $this->register($openid);
+        }
+    }
+
+    function getOpenid($code)
+    {
+        $appid = 'wxbfbc582268450e07';
+        $secret = '2017a2e0fcc6c11927ad3e62a17d76ae';
+        $grant_type = 'authorization_code';
+        $js_code = $code;
+        $arr = file_get_contents("https://api.weixin.qq.com/sns/jscode2session?appid=" . $appid . "&secret=" . $secret . "&js_code=" . $js_code . "&grant_type=" . $grant_type);
+        return json_decode($arr);
+    }
+
+    private function doLogin($uid)
+    {
+        $user = Db::table('cht_user')->where('uid', $uid)->find();
+
+        //获取token
+        $token_content = mt_rand(10000, 99999) . "|" . $uid . "|" . $user['mobile'] . "|" . time();
+        $class_xcrypt = new Xcrypt(INTERFACE_KEY, "ofb", INTERFACE_KEY);
+        $token = $class_xcrypt->encrypt($token_content);
+
+        //token等存入缓存
+        $key_token = "cht_user_auth_token_" . $uid . $user['mobile'];
+        Cache::set($key_token, $token, REDIS_EXPIRE_TIME_TOKEN);
         $data = [
-            'appid' => 'wxbfbc582268450e07',
-            'secret' => '2017a2e0fcc6c11927ad3e62a17d76ae',
-            'js_code' => $code,
-            'grant_type' => 'authorization_code'
+            'uid' => $uid,
+            'token' => $token
         ];
-        dump(http_post($url, json_encode($data)));
+        Db::table('cht_user')->where('uid', $uid)->setField('lastlogin_time', time());
+        $result = $data;
+
+        data_format_json(0, $result, '登录成功');
+    }
+
+    private function register($openid)
+    {
+        //自动生成昵称
+        $name = '传话筒' . rand_number(4) . substr($openid, 7, 10);
+
+        //注册新用户
+        $user = new \app\index\model\User();
+        $user->data([
+            'openid' => $openid,
+            'user_name' => $name
+        ]);
+        $user->save();
+        $uid = $user->uid;
+        $result = $this->doLogin($uid);
+
+        data_format_json(0, $result, '登录成功');
     }
 }
