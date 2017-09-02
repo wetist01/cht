@@ -199,5 +199,13 @@ class User extends Base
         $service_user->profile_edit($uid, $category, $content);
     }
 
+    function wxappLogin()
+    {
+        $request = Request::instance();
+        $code = $request->param('code') or data_format_json(-1, '', 'code is null');
+        $service_user = new \app\index\service\User();
+        $service_user->wxapp_login($code);
+    }
+
 
 }

@@ -211,3 +211,40 @@ function jsonToArray($data)
     $data = json_decode(json_encode($data), true);
     return $data;
 }
+
+//php curl GET 方法
+function http_get($url)
+{ // 模拟获取内容函数
+    $ua = "cht://v1.0.0(Linux;v0.01;zh_cn;)-chtweb";
+    $curl = curl_init(); // 启动一个CURL会话
+    curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+    curl_setopt($curl, CURLOPT_USERAGENT, $ua); // 模拟用户使用的浏览器
+    curl_setopt($curl, CURLOPT_HTTPGET, 1); // 发送一个常规的GET请求
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10); // 最多10秒 超过10超时
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+    $output = curl_exec($curl); // 执行操作
+    if (curl_errno($curl)) {
+        return array(
+            'ret' => -100,
+            'msg' => 'Errno' . curl_error($curl)
+        );
+    }
+    curl_close($curl); // 关闭CURL会话
+    return $output; // 返回数据
+}
+
+function http_post($url, $data = '')
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // 最多10秒 超过10超时
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data))
+    );
+    $result = curl_exec($ch);
+    curl_close($ch);
+    return $result;
+}

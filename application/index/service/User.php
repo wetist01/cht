@@ -74,4 +74,16 @@ class User extends Base
             data_format_json(-3, '', '用户名已存在');
         }
     }
+
+    function wxapp_login($code)
+    {
+        $url = 'https://api.weixin.qq.com/sns/jscode2session';
+        $data = [
+            'appid' => 'wxbfbc582268450e07',
+            'secret' => '2017a2e0fcc6c11927ad3e62a17d76ae',
+            'js_code' => $code,
+            'grant_type' => 'authorization_code'
+        ];
+        dump(http_post($url, json_encode($data)));
+    }
 }
