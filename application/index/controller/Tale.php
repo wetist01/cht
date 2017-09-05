@@ -71,7 +71,24 @@ class Tale extends Base
             $data['description'] = $request->param('description', '');
             $data['is_anon'] = $request->param('is_anon', 0, 'intval');
             $data['type'] = $request->param('type', null, 'intval') or data_format_json(-7, '', 'type is null');
-            $data['img'] = $request->param('img', 'http://img.wetist.com/head/20170216/cc8789ea850e328123bff6b6b4380ae9.JPG?x-oss-process=image/resize,w_400');
+            if ($data['type'] == 2) {
+                $file = $request->file('image');
+                $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'tale');
+                if ($info) {
+                    $extension = $info->getSaveName();
+                    $bucket = 'cht-img';
+                    $object = 'tale/' . $extension;
+                    $file = 'uploads/tale/' . $extension;
+                    if (upload_file_oss($bucket, $object, $file)) {
+                        $url = 'http://img.chuanhuatong.cc/' . $object;
+                    } else {
+                        $url = '';
+                    }
+                } else {
+                    $url = '';
+                }
+                $data['img'] = $url;
+            }
             $service_tale = new \app\index\service\Tale();
             $service_tale->create_tale($data);
         }
