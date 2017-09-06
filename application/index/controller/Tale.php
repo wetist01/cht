@@ -71,7 +71,9 @@ class Tale extends Base
             $data['description'] = $request->param('description', '') or data_format_json(-1, '', 'description is null');
             $data['is_anon'] = $request->param('is_anon', 0, 'intval');
             $data['type'] = $request->param('type', null, 'intval') or data_format_json(-7, '', 'type is null');
-            $data['img'] = $request->param('img');
+            if ($data['type'] == 2) {
+                $data['img'] = $request->param('img');
+            }
             $service_tale = new \app\index\service\Tale();
             $service_tale->create_tale($data);
         }
