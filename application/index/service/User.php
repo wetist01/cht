@@ -82,7 +82,6 @@ class User extends Base
     function wxapp_login($code)
     {
         $wx_open = $this->getOpenid($code);
-        dump($wx_open);exit;
         $openid = $wx_open->openid;
 
         $m_user = new \app\index\model\User();
