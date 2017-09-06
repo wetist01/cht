@@ -68,27 +68,10 @@ class Tale extends Base
             $data['uid'] = $request->param('uid', 0, 'intval');
             $data['longitude'] = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $data['latitude'] = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
-            $data['description'] = $request->param('description', '');
+            $data['description'] = $request->param('description', '') or data_format_json(-1, '', 'description is null');
             $data['is_anon'] = $request->param('is_anon', 0, 'intval');
             $data['type'] = $request->param('type', null, 'intval') or data_format_json(-7, '', 'type is null');
-            if ($data['type'] == 2) {
-                $file = $request->file('image');
-                $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'tale');
-                if ($info) {
-                    $extension = $info->getSaveName();
-                    $bucket = 'cht-img';
-                    $object = 'tale/' . $extension;
-                    $file = 'uploads/tale/' . $extension;
-                    if (upload_file_oss($bucket, $object, $file)) {
-                        $url = 'http://img.chuanhuatong.cc/' . $object;
-                    } else {
-                        $url = '';
-                    }
-                } else {
-                    $url = '';
-                }
-                $data['img'] = $url;
-            }
+            $data['img'] = $request->param('img');
             $service_tale = new \app\index\service\Tale();
             $service_tale->create_tale($data);
         }

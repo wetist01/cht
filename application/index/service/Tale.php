@@ -20,18 +20,6 @@ class Tale extends Base
      */
     function create_tale($data = [])
     {
-        if ($data['type'] == 1) {
-            if (!$data['description']) {
-                data_format_json(-2, '', 'description is null');
-            }
-        } elseif ($data['type'] == 2) {
-            if (!$data['img']) {
-                data_format_json(-3, '', 'img is null');
-            }
-        } else {
-            data_format_json(-4, '', 'type is error');
-        }
-
         $data['geohash'] = geohash_encode($data['longitude'], $data['latitude']);
 
         $m_user = new \app\index\model\User();
