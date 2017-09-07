@@ -126,6 +126,7 @@ class Like extends Base
     {
         $m_like = new \app\index\model\Like();
         $where['liked_uid'] = $liked_uid;
+        $where['uid'] = ['neq', $liked_uid];
         $where['is_read'] = 0;
         $where['is_deleted'] = 0;
         $liked_num = $m_like->where($where)->count();

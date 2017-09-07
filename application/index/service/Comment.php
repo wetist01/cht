@@ -136,6 +136,7 @@ class Comment extends Base
     {
         $m_comment = new \app\index\model\Comment();
         $list = $m_comment->get_commented_list($commented_uid);
+        $m_comment->isUpdate(true)->save(['is_read' => 1], ['commented_uid' => $commented_uid]);
         $list = jsonToArray($list);
 
         foreach ($list as $key => $value) {
