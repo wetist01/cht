@@ -248,3 +248,12 @@ function http_post($url, $data = '')
     curl_close($ch);
     return $result;
 }
+
+function wxapp_access_token()
+{
+    $appid = 'wxbfbc582268450e07';
+    $secret = '2017a2e0fcc6c11927ad3e62a17d76ae';
+    $grant_type = 'client_credential';
+    $arr = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?appid=" . $appid . "&secret=" . $secret . "&grant_type=" . $grant_type);
+    return json_decode($arr);
+}

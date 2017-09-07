@@ -145,4 +145,46 @@ class User extends Base
 
         data_format_json(0, $result, '登录成功');
     }
+
+    /**
+     * 获取微信小程序access_token
+     */
+    function accessTokenWxApp()
+    {
+        $accesstoken = Cache::get('wxapp_access_token');
+        if ($accesstoken) {
+            $access_token = $accesstoken;
+        } else {
+            $access = wxapp_access_token();
+            $access_token = $access->access_token;
+            Cache::set('wxapp_access_token', $access_token, 3600);
+        }
+        return $access_token;
+    }
+
+    /**
+     * 发送微信模板消息
+     */
+    function template_notice($uid, $form_id, $content)
+    {
+        $m_user = new \app\index\model\User();
+        $openid = $m_user->where('uid', $uid)->value('openid');
+
+        $data = [
+            'touser' => $openid,
+            'template_id' => 'GtVy1WqWSkP8ZZKNOubpM73NvIDDKK4QEMaghBXRWa8',
+            'page' => 'i',
+            'form_id' => $form_id,
+            'data' => [
+                'keyword1' => $content,
+                'keyword2' => date('Y-m-d H:i', time())
+            ]
+        ];
+
+        $access_token = $this->accessTokenWxApp();
+        $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
+        $data = json_encode($data);
+        data_format_json(http_post($url, $data));
+    }
+
 }
