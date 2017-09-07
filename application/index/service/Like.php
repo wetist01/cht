@@ -107,6 +107,7 @@ class Like extends Base
         $m_like = new \app\index\model\Like();
         $where['liked_uid'] = $liked_uid;
         $where['is_deleted'] = 0;
+        $where['uid'] = ['neq', $liked_uid];
         $list = $m_like->where($where)->field('uid,user_name,img_head,tale_id,create_time')->order('create_time', 'desc')->page($page, 20)->select();
         $list = jsonToArray($list);
         foreach ($list as $key => $val) {
