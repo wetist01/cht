@@ -149,7 +149,7 @@ class Tale extends Base
     function process_tale($tale_list = [], $long = 0, $lat = 0, $page = 1)
     {
         if ($tale_list && $page > 0) {
-            $tale_list = page_array($tale_list, $page, 20);
+            $tale_list = page_array($tale_list, $page, 50);
             foreach ($tale_list as $key => $value) {
                 $tale_list[$key]['distance'] = getDistance($long, $lat, $value['longitude'], $value['latitude']);
                 $tale_list[$key]['latest_reply_time'] = getTimeDifference($value['update_time']);
