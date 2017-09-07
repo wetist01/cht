@@ -2,6 +2,8 @@
 
 namespace app\index\controller;
 
+use think\Env;
+
 class Index extends Base
 {
     public function _initialize($token_allow = [], $request = null)
@@ -17,6 +19,7 @@ class Index extends Base
 
     function show()
     {
-        return json(1);
+        $show = Env::get('show');
+        return json($show);
     }
 }
