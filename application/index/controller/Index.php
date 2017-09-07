@@ -2,9 +2,6 @@
 
 namespace app\index\controller;
 
-use think\Db;
-use think\Request;
-
 class Index extends Base
 {
     public function _initialize($token_allow = [], $request = null)
