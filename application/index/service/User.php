@@ -165,14 +165,14 @@ class User extends Base
     /**
      * 发送微信模板消息
      */
-    function template_notice($uid, $form_id, $content)
+    function template_notice($uid, $form_id, $content, $template_id)
     {
         $m_user = new \app\index\model\User();
         $openid = $m_user->where('uid', $uid)->value('openid');
 
         $data = [
             'touser' => $openid,
-            'template_id' => 'GtVy1WqWSkP8ZZKNOubpM73NvIDDKK4QEMaghBXRWa8',
+            'template_id' => $template_id,
             'page' => 'i',
             'form_id' => $form_id,
             'data' => [
