@@ -9,6 +9,8 @@
 namespace app\index\model;
 
 
+use think\Cache;
+
 class Csm extends Base
 {
     protected $pk = 'uid';
@@ -22,10 +24,18 @@ class Csm extends Base
      */
     function csm_list()
     {
-        $where['is_deleted'] = 0;
-        $field = 'csm_id,csm_name,tab,img,longitude,latitude,geohash';
-        $list = $this->where($where)->field($field)->select();
-        $list = jsonToArray($list);
+        $csm_list = Cache::get('csm_list');
+
+        if ($csm_list) {
+            $list = $csm_list;
+        } else {
+            $where['is_deleted'] = 0;
+            $field = 'csm_id,csm_name,tab,img';
+            $list = $this->where($where)->field($field)->order('sort', 'asc')->select();
+            $list = jsonToArray($list);
+            Cache::set('csm_list', $list, 3600 * 24);
+        }
+
         return $list;
     }
 }
