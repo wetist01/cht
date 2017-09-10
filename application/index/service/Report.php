@@ -89,6 +89,7 @@ class Report extends Base
                 $m_report->allowField(true)->save($data);
                 $report_id = $m_report->report_id;
                 if ($report_id) {
+                    send_sms(15651079118, '平台有新的举报，请尽快审核。');
                     data_format_json(0, ['report_id' => $report_id], 'success');
                 } else {
                     data_format_json(-2, '', '数据库错误');
