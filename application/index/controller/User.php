@@ -17,7 +17,7 @@ class User extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = ['logout', 'upload_img_head', 'user_index_init', 'profileedit', 'templatenotice'];//需要token验证的action,小写
+        $token_allow = ['logout', 'upload_img_head', 'user_index_init', 'profileedit'];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
@@ -217,7 +217,7 @@ class User extends Base
         $form_id = $request->param('form_id') or data_format_json(-1, '', 'form_id is null');
         $content = $request->param('content') or data_format_json(-1, '', 'content is null');
         $template_id = $request->param('template_id') or data_format_json(-1, '', 'template_id is null');
-        $page = $request->param('noticed_uid') or data_format_json(-1, '', 'noticed_uid is null');
+        $page = $request->param('page') or data_format_json(-1, '', 'page is null');
         $service_user = new \app\index\service\User();
         $service_user->template_notice($uid, $form_id, $content, $template_id, $page);
     }

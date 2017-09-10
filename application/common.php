@@ -249,11 +249,21 @@ function http_post($url, $data = '')
     return $result;
 }
 
+//获取微信access_token
 function wxapp_access_token()
 {
-    $appid = 'wxbfbc582268450e07';
-    $secret = '2017a2e0fcc6c11927ad3e62a17d76ae';
-    $grant_type = 'client_credential';
-    $arr = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?appid=" . $appid . "&secret=" . $secret . "&grant_type=" . $grant_type);
-    return json_decode($arr);
+    $accesstoken = \think\Cache::get('wxapp_access_token');
+    if ($accesstoken) {
+        $access_token = $accesstoken;
+    } else {
+        $appid = 'wxbfbc582268450e07';
+        $secret = '2017a2e0fcc6c11927ad3e62a17d76ae';
+        $grant_type = 'client_credential';
+        $arr = file_get_contents("https://api.weixin.qq.com/cgi-bin/token?appid=" . $appid . "&secret=" . $secret . "&grant_type=" . $grant_type);
+        $arr = json_decode($arr);
+        $access_token = $arr->access_token;
+        \think\Cache::set('wxapp_access_token', $access_token, 3600);
+    }
+
+    return $access_token;
 }

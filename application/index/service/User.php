@@ -181,7 +181,7 @@ class User extends Base
             ]
         ];
 
-        $access_token = $this->accessTokenWxApp();
+        $access_token = wxapp_access_token();
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
         $data = json_encode($data);
         data_format_json(http_post($url, $data));
