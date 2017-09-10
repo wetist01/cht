@@ -129,7 +129,7 @@ function getNeighbors($long = 0, $lat = 0, $str_num = 6)
  * @param  Int $decimal2 米精度 保留小数位数
  * @return string
  */
-function getDistance($longitude1 = 0, $latitude1 = 0, $longitude2 = 0, $latitude2 = 0, $decimal1 = 0, $decimal2 = 0)
+function getDistance($longitude1 = 0, $latitude1 = 0, $longitude2 = 0, $latitude2 = 0, $decimal1 = 1, $decimal2 = 0)
 {
     if ($latitude1 == 0 || $longitude1 == 0 || $latitude2 == 0 || $longitude2 == 0) {
         return '';
