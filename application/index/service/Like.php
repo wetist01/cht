@@ -105,18 +105,25 @@ class Like extends Base
     function get_liked_list($liked_uid = 0, $page = 1)
     {
         $m_like = new \app\index\model\Like();
+        $m_like->isUpdate(true)->save(['is_read' => 1], ['liked_uid' => $liked_uid]);//清空点赞提醒数
+
         $where['liked_uid'] = $liked_uid;
         $where['is_deleted'] = 0;
         $where['uid'] = ['neq', $liked_uid];
+
         $list = $m_like->where($where)->field('uid,user_name,img_head,tale_id,create_time')->order('create_time', 'desc')->page($page, 20)->select();
         $list = jsonToArray($list);
-        foreach ($list as $key => $val) {
-            $list[$key]['create_time'] = getTimeDifference($val['create_time']);
+
+        if ($list) {
+            foreach ($list as $key => $val) {
+                $list[$key]['create_time'] = getTimeDifference($val['create_time']);
+            }
+
+            data_format_json(0, $list, 'success');
+        } else {
+            data_format_json(-2, '', 'null');
         }
 
-        $m_like->isUpdate(true)->save(['is_read' => 1], ['liked_uid' => $liked_uid]);//清空点赞提醒数
-
-        data_format_json(0, $list, 'success');
     }
 
     /**

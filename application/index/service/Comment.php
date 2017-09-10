@@ -140,16 +140,21 @@ class Comment extends Base
         $m_comment->isUpdate(true)->save(['is_read' => 1], ['commented_uid' => $commented_uid]);
         $list = jsonToArray($list);
 
-        foreach ($list as $key => $value) {
-            if ($list[$key]['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
-                $list[$key]['user_name'] = '匿名用户';
-                $list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
+        if ($list) {
+            foreach ($list as $key => $value) {
+                if ($list[$key]['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
+                    $list[$key]['user_name'] = '匿名用户';
+                    $list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
+                }
+
+                $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
             }
 
-            $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
+            data_format_json(0, $list, 'success');
+        } else {
+            data_format_json(-2, '', 'null');
         }
 
-        data_format_json(0, $list, 'success');
     }
 
     /**
@@ -163,10 +168,14 @@ class Comment extends Base
         $list = $m_comment->get_my_comment_list($uid);
         $list = jsonToArray($list);
 
-        foreach ($list as $key => $value) {
-            $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
-        }
+        if ($list) {
+            foreach ($list as $key => $value) {
+                $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
+            }
 
-        data_format_json(0, $list, 'success');
+            data_format_json(0, $list, 'success');
+        } else {
+            data_format_json(-2, '', 'null');
+        }
     }
 }

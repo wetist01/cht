@@ -43,7 +43,11 @@ class Csm extends Base
         $service_tale = new \app\index\service\Tale();
         $list = $service_tale->process_tale($tale_list, $user_long, $user_lat, $page);
 
-        data_format_json(0, $list, 'success');
+        if ($list) {
+            data_format_json(0, $list, 'success');
+        } else {
+            data_format_json(-2, '', '没有数据');
+        }
 
     }
 
