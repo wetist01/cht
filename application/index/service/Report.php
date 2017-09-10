@@ -71,29 +71,34 @@ class Report extends Base
     function create_report_tale($uid, $tale_id, $description)
     {
         $m_tale = new \app\index\model\Tale();
+        $m_report = new \app\index\model\Report();
 
         $data['type'] = 1;
         $data['uid'] = $uid;
-        $data['description'] = $description;
         $data['tale_id'] = $tale_id;
 
-        $reported_uid = $m_tale->where('tale_id', $tale_id)->value('uid');
+        $is_reported = $m_report->where($data)->count();
 
-        if ($reported_uid) {
+        if ($is_reported == 0) {
+            $reported_uid = $m_tale->where('tale_id', $tale_id)->value('uid');
 
-            $data['reported_uid'] = $reported_uid;
+            if ($reported_uid) {
+                $data['description'] = $description;
+                $data['reported_uid'] = $reported_uid;
 
-            $m_report = new \app\index\model\Report();
-            $m_report->allowField(true)->save($data);
-            $report_id = $m_report->report_id;
-            if ($report_id) {
-                data_format_json(0, ['report_id' => $report_id], 'success');
+                $m_report->allowField(true)->save($data);
+                $report_id = $m_report->report_id;
+                if ($report_id) {
+                    data_format_json(0, ['report_id' => $report_id], 'success');
+                } else {
+                    data_format_json(-2, '', '数据库错误');
+                }
+
             } else {
-                data_format_json(-2, '', '数据库错误');
+                data_format_json(-3, '', 'tale_id不存在');
             }
-
         } else {
-            data_format_json(-3, '', 'tale_id不存在');
+            data_format_json(-4, '', '已经举报过了');
         }
 
     }
