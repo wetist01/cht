@@ -35,9 +35,10 @@ class Csm extends Base
         $csm_info = $m_csm->fetchWhere(['csm_id' => $csm_id], '*', 1);
         $csm_long = $csm_info['longitude'];
         $csm_lat = $csm_info['latitude'];
+        $csm_near = $csm_info['near_num'];
 
         $m_tale = new \app\index\model\Tale();
-        $tale_list = $m_tale->get_tale_list($csm_long, $csm_lat);
+        $tale_list = $m_tale->get_tale_list($csm_long, $csm_lat, $csm_near);
 
         $service_tale = new \app\index\service\Tale();
         $list = $service_tale->process_tale($tale_list, $user_long, $user_lat, $page);
