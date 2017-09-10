@@ -9,6 +9,8 @@
 namespace app\index\service;
 
 
+use think\Cache;
+
 class Notice extends Base
 {
     function template_notice($uid, $form_id, $content, $template_id, $page)
@@ -36,6 +38,7 @@ class Notice extends Base
         $access_token = wxapp_access_token();
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
         $data = json_encode($data);
+        Cache::set('test',$data);
         data_format_json(http_post($url, $data));
     }
 }
