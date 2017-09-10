@@ -27,7 +27,7 @@ class Notice extends Base
         $content = $request->param('content') or data_format_json(-1, '', 'content is null');
         $template_id = $request->param('template_id') or data_format_json(-1, '', 'template_id is null');
         $page = $request->param('page') or data_format_json(-1, '', 'page is null');
-        $service_user = new \app\index\service\User();
-        $service_user->template_notice($uid, $form_id, $content, $template_id, $page);
+        $service_notice = new \app\index\service\Notice();
+        $service_notice->template_notice($uid, $form_id, $content, $template_id, $page);
     }
 }
