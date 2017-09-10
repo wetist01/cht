@@ -23,10 +23,12 @@ class Notice extends Base
             'form_id' => $form_id,
             'data' => [
                 '评论内容' => [
-                    'value' => $content
+                    'value' => $content,
+                    'color' => '#173177'
                 ],
                 '评论时间' => [
-                    'value' => date('Y-m-d H:i', time())
+                    'value' => date('Y-m-d H:i', time()),
+                    'color' => '#173177'
                 ]
             ]
         ];
