@@ -24,11 +24,11 @@ class Notice extends Base
             'page' => $page,
             'form_id' => $form_id,
             'data' => [
-                '评论内容' => [
+                'keyword1' => [
                     'value' => $content,
                     'color' => '#173177'
                 ],
-                '评论时间' => [
+                'keyword2' => [
                     'value' => date('Y-m-d H:i', time()),
                     'color' => '#173177'
                 ]
@@ -37,7 +37,6 @@ class Notice extends Base
 
         $access_token = wxapp_access_token();
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
-        Cache::set('test',$data);
         $data = json_encode($data);
         data_format_json(http_post($url, $data));
     }
