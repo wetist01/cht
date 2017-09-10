@@ -176,8 +176,8 @@ class User extends Base
             'page' => $page,
             'form_id' => $form_id,
             'data' => [
-                'keyword1' => $content,
-                'keyword2' => date('Y-m-d H:i', time())
+                '评论内容' => $content,
+                '评论时间' => date('Y-m-d H:i', time())
             ]
         ];
 
