@@ -22,10 +22,10 @@ class Notice extends Base
             'page' => $page,
             'form_id' => $form_id,
             'data' => [
-                'keyword1' => [
+                '评论内容' => [
                     'value' => $content
                 ],
-                'keyword2' => [
+                '评论时间' => [
                     'value' => date('Y-m-d H:i', time())
                 ]
             ]
