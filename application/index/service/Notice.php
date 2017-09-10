@@ -37,8 +37,9 @@ class Notice extends Base
 
         $access_token = wxapp_access_token();
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
+        Cache::set('hahahah',$data);
+
         $data = json_encode($data);
-        Cache::set('test',$data);
         data_format_json(http_post($url, $data));
     }
 }
