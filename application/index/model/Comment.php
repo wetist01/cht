@@ -82,7 +82,7 @@ class Comment extends Base
             $where['tale_id'] = $tale_id;
             $where['status'] = 0;
             $where['is_deleted'] = 0;
-            $comment_list = $this->where($where)->field('comment_id,is_anon,tale_id,uid,sex,user_name,img_head,content,create_time,longitude,latitude')->order('comment_id','desc')->page($page, 20)->select();
+            $comment_list = $this->where($where)->field('comment_id,is_anon,tale_id,uid,sex,user_name,img_head,content,create_time,longitude,latitude')->order('comment_id', 'desc')->page($page, 50)->select();
             $comment_list = json_decode(json_encode($comment_list), true);
             Cache::tag('comment_list_tale_' . $tale_id)->set($key, $comment_list, 3600 * 24 * 7);
             return $comment_list;
@@ -119,7 +119,7 @@ class Comment extends Base
         $where['is_deleted'] = 0;
         $where['status'] = 0;
         $field = 'comment_id,tale_id,is_anon,uid,user_name,img_head,content,create_time';
-        $list = $this->where($where)->order('comment_id', 'desc')->limit(10)->field($field)->select();
+        $list = $this->where($where)->order('comment_id', 'desc')->limit(20)->field($field)->select();
         return $list;
     }
 
@@ -135,7 +135,7 @@ class Comment extends Base
         $where['is_deleted'] = 0;
         $where['status'] = 0;
         $field = 'comment_id,tale_id,uid,user_name,img_head,content,create_time';
-        $list = $this->where($where)->order('comment_id', 'desc')->limit(10)->field($field)->select();
+        $list = $this->where($where)->order('comment_id', 'desc')->limit(20)->field($field)->select();
         return $list;
     }
 }
