@@ -193,6 +193,7 @@ class Tale extends Base
 
             if ($info['is_anon'] == 1) {
                 $info['user_name'] = '匿名';
+                $info['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
             }
 
             $info['distance'] = getDistance($data['longitude'], $data['latitude'], $info['longitude'], $info['latitude']);
