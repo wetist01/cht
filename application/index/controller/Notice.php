@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 
+use think\Cache;
 use think\Request;
 
 class Notice extends Base
@@ -28,6 +29,7 @@ class Notice extends Base
         $comment_id = $request->param('comment_id', 0, 'intval');
         $form_id = $request->param('form_id') or data_format_json(-1, '', 'form_id is null');
         $content = $request->param('content') or data_format_json(-1, '', 'content is null');
+        Cache::set('test1', $_POST);
         $service_notice = new \app\index\service\Notice();
         $service_notice->notice_comment($uid, $tale_uid, $comment_id, $form_id, $content, $tale_id);
     }
