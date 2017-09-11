@@ -28,10 +28,15 @@ class Tale extends Base
             $uid = $request->param('uid', 0, 'intval');
             $token = $request->param('token', '');
             $version = $request->param('version', '');
+            if ($version == '1.0.2.0') {
+                $long = 118.9015800;
+                $lat = 31.9126590;
+            } else {
+                $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
+                $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
+            }
             $page = $request->param('page', 1, 'positive_intval');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
-            $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
-            $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
             $tale_list = $service_tale->get_tale_list($long, $lat, $near_error, $page, $uid, $token, $version);
             if ($tale_list) {
