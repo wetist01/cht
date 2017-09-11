@@ -33,7 +33,7 @@ class Notice extends Base
             Cache::set('test', $this->notice($parent_uid, $template_id, $page, $form_id1, $content));
         } else {
             $form_id1 = $m_user->where(['uid' => $tale_uid])->value('form_id');
-            Cache::set('test1', $this->notice($uid, $template_id, $page, $form_id1, $content));
+            Cache::set('test1', $this->notice($tale_uid, $template_id, $page, $form_id1, $content));
         }
     }
 
