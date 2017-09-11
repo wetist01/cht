@@ -26,7 +26,7 @@ class Notice extends Base
             //给发送评论的人发消息
             $template_id1 = 'Mcf0QHSy9KLRqM8IJGmKDgwAQs9ZsfupsbTI31KNnbk';
             $page1 = 'pages/i/i';
-            echo $this->notice($uid, $template_id1, $page1, $form_id, $content);
+//            echo $this->notice($uid, $template_id1, $page1, $form_id, $content);
             //给被回复的人发消息(非tale_uid)
             $template_id2 = 'GtVy1WqWSkP8ZZKNOubpMxbp5VtfCNpgJoymnYrZNj4';
             $page2 = 'pages/i/i';
