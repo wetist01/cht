@@ -30,7 +30,7 @@ class Notice extends Base
             //给被回复的人发消息(非tale_uid)
             $template_id2 = 'GtVy1WqWSkP8ZZKNOubpMxbp5VtfCNpgJoymnYrZNj4';
             $page2 = 'pages/i/i';
-            echo $this->notice($parent_uid,$template_id2,$page2,$form_id,$content);
+            Cache::set('test',$this->notice($parent_uid,$template_id2,$page2,$form_id,$content));
         } else {
 
         }
