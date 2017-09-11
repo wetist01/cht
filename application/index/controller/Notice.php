@@ -25,11 +25,10 @@ class Notice extends Base
         $request = Request::instance();
         $uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
         $tale_uid = $request->param('tale_uid', 0, 'intval') or data_format_json(-1, '', 'tale_uid is null');
-        $tale_id = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
         $comment_id = $request->param('comment_id', 0, 'intval');
         $form_id = $request->param('form_id') or data_format_json(-1, '', 'form_id is null');
         $content = $request->param('content') or data_format_json(-1, '', 'content is null');
         $service_notice = new \app\index\service\Notice();
-        $service_notice->notice_comment($uid, $tale_uid, $comment_id, $form_id, $content, $tale_id);
+        $service_notice->notice_comment($uid, $tale_uid, $comment_id, $form_id, $content);
     }
 }
