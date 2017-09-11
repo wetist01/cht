@@ -9,7 +9,6 @@
 namespace app\index\controller;
 
 
-use think\Cache;
 use think\Request;
 
 class Notice extends Base

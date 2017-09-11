@@ -9,7 +9,6 @@
 namespace app\index\service;
 
 
-use think\Cache;
 
 class Notice extends Base
 {
@@ -30,10 +29,10 @@ class Notice extends Base
 
             $form_id1 = $m_user->where(['uid' => $parent_uid])->value('form_id');
 
-            Cache::set('test', $this->notice($parent_uid, $template_id, $page, $form_id1, $content));
+            $this->notice($parent_uid, $template_id, $page, $form_id1, $content);
         } else {
             $form_id1 = $m_user->where(['uid' => $tale_uid])->value('form_id');
-            Cache::set('test1', $this->notice($tale_uid, $template_id, $page, $form_id1, $content));
+            $this->notice($tale_uid, $template_id, $page, $form_id1, $content);
         }
     }
 
