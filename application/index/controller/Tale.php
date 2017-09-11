@@ -67,7 +67,7 @@ class Tale extends Base
         $request = Request::instance();
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {//TODO
             $data['uid'] = $request->param('uid', 0, 'intval');
-            $data['form_id'] = $request->param('form_id', 0, 'intval');
+            $data['form_id'] = $request->param('form_id');
             $data['longitude'] = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $data['latitude'] = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $data['description'] = $request->param('description', '') or data_format_json(-1, '', 'description is null');
