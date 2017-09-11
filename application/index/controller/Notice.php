@@ -15,19 +15,20 @@ class Notice extends Base
 {
     public function _initialize($token_allow = [], $request = null)
     {
-        $token_allow = [];//需要token验证的action,小写
+        $token_allow = ['noticecomment'];//需要token验证的action,小写
         parent::_initialize($token_allow, $request);
     }
 
-    function templateNotice()
+    function noticeComment()
     {
         $request = Request::instance();
-        $uid = $request->param('noticed_uid', 0, 'intval') or data_format_json(-1, '', 'noticed_uid is null');
+        $uid = $request->param('uid', 0, 'intval') or data_format_json(-1, '', 'uid is null');
+        $tale_uid = $request->param('tale_uid', 0, 'intval') or data_format_json(-1, '', 'tale_uid is null');
+        $tale_id = $request->param('tale_id', 0, 'intval') or data_format_json(-1, '', 'tale_id is null');
+        $comment_id = $request->param('comment_id', 0, 'intval');
         $form_id = $request->param('form_id') or data_format_json(-1, '', 'form_id is null');
         $content = $request->param('content') or data_format_json(-1, '', 'content is null');
-        $template_id = $request->param('template_id') or data_format_json(-1, '', 'template_id is null');
-        $page = $request->param('page') or data_format_json(-1, '', 'page is null');
         $service_notice = new \app\index\service\Notice();
-        $service_notice->template_notice($uid, $form_id, $content, $template_id, $page);
+        $service_notice->notice_comment($uid, $tale_uid, $comment_id, $form_id, $content, $tale_id);
     }
 }
