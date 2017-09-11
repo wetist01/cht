@@ -25,9 +25,12 @@ class Notice extends Base
 
             //给发送评论的人发消息
             $template_id1 = 'Mcf0QHSy9KLRqM8IJGmKDgwAQs9ZsfupsbTI31KNnbk';
-            $page1 = 'pages/comment/comment?tale_id=' . $tale_id . '&uid=' . $tale_uid;
-            $this->notice($uid, $template_id1, $page1, $form_id, $content);
+            $page1 = 'pages/i/i';
+            echo $this->notice($uid, $template_id1, $page1, $form_id, $content);
             //给被回复的人发消息(非tale_uid)
+            $template_id2 = 'GtVy1WqWSkP8ZZKNOubpMxbp5VtfCNpgJoymnYrZNj4';
+            $page2 = 'pages/i/i';
+            echo $this->notice($parent_uid,$template_id2,$page2,$form_id,$content);
         } else {
 
         }
@@ -58,7 +61,6 @@ class Notice extends Base
         $access_token = wxapp_access_token();
         $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
         $data = json_encode($data);
-        Cache::set('test',$data);
         return http_post($url, $data);
     }
 }
