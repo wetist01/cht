@@ -27,12 +27,13 @@ class Tale extends Base
         if ($request->isAjax() || $request->isGet() || $request->isPost()) {
             $uid = $request->param('uid', 0, 'intval');
             $token = $request->param('token', '');
+            $version = $request->param('version', '');
             $page = $request->param('page', 1, 'positive_intval');
             $near_error = $request->param('near_error', 6, 'intval');//定位范围误差值，6代表2km内
             $long = $request->param('longitude', null, 'floatval') or data_format_json(-5, '', 'longitude is null');
             $lat = $request->param('latitude', null, 'floatval') or data_format_json(-6, '', 'latitude is null');
             $service_tale = new \app\index\service\Tale();
-            $tale_list = $service_tale->get_tale_list($long, $lat, $near_error, $page, $uid, $token);
+            $tale_list = $service_tale->get_tale_list($long, $lat, $near_error, $page, $uid, $token, $version);
             if ($tale_list) {
                 data_format_json(0, $tale_list, 'success');
             } else {

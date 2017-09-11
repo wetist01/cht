@@ -72,7 +72,7 @@ class Tale extends Base
      * @param string $token
      * @return array
      */
-    function get_tale_list($long, $lat, $near_error, $page, $uid, $token)
+    function get_tale_list($long, $lat, $near_error, $page, $uid, $token, $version)
     {
         if ($uid && $token) {//判断是否是登录用户
             $tale_list = $this->get_tale_list_login($long, $lat, $near_error, $page, $uid, $token);
