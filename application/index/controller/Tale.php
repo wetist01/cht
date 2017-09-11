@@ -76,7 +76,6 @@ class Tale extends Base
             if ($data['type'] == 2) {
                 $data['img'] = $request->param('img');
             }
-            Cache::set('test2', $data);
             $service_tale = new \app\index\service\Tale();
             $service_tale->create_tale($data);
         }
