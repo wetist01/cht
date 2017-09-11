@@ -162,29 +162,4 @@ class User extends Base
         return $access_token;
     }
 
-    /**
-     * 发送微信模板消息
-     */
-    function template_notice($uid, $form_id, $content, $template_id, $page)
-    {
-        $m_user = new \app\index\model\User();
-        $openid = $m_user->where('uid', $uid)->value('openid');
-
-        $data = [
-            'touser' => $openid,
-            'template_id' => $template_id,
-            'page' => $page,
-            'form_id' => $form_id,
-            'data' => [
-                '评论内容' => $content,
-                '评论时间' => date('Y-m-d H:i', time())
-            ]
-        ];
-
-        $access_token = wxapp_access_token();
-        $url = 'https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=' . $access_token;
-        $data = json_encode($data);
-        data_format_json(http_post($url, $data));
-    }
-
 }

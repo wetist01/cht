@@ -210,15 +210,4 @@ class User extends Base
         $service_user->wxapp_login($code);
     }
 
-    function templateNotice()
-    {
-        $request = Request::instance();
-        $uid = $request->param('noticed_uid', 0, 'intval') or data_format_json(-1, '', 'noticed_uid is null');
-        $form_id = $request->param('form_id') or data_format_json(-1, '', 'form_id is null');
-        $content = $request->param('content') or data_format_json(-1, '', 'content is null');
-        $template_id = $request->param('template_id') or data_format_json(-1, '', 'template_id is null');
-        $page = $request->param('page') or data_format_json(-1, '', 'page is null');
-        $service_user = new \app\index\service\User();
-        $service_user->template_notice($uid, $form_id, $content, $template_id, $page);
-    }
 }
