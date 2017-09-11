@@ -23,6 +23,9 @@ class Tale extends Base
         $data['geohash'] = geohash_encode($data['longitude'], $data['latitude']);
 
         $m_user = new \app\index\model\User();
+        if ($data['form_id']) {
+            $m_user->isUpdate(true)->save(['form_id' => $data['form_id']], ['uid' => $data['uid']]);
+        }
         $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'user_name,sex,img_head', 1);
         $data['user_name'] = $user_info['user_name'];
         $data['img_head'] = $user_info['img_head'];
