@@ -9,7 +9,6 @@
 namespace app\index\service;
 
 
-
 class Notice extends Base
 {
     function notice_comment($uid, $tale_uid, $comment_id, $form_id, $content)
@@ -27,12 +26,15 @@ class Notice extends Base
             $parent_uid = $parent_comment['uid'];
             $content = '回复 ' . $parent_user_name . ':' . $content;
 
-            $form_id1 = $m_user->where(['uid' => $parent_uid])->value('form_id');
-
-            $this->notice($parent_uid, $template_id, $page, $form_id1, $content);
+            if ($parent_uid != $uid) {
+                $form_id1 = $m_user->where(['uid' => $parent_uid])->value('form_id');
+                $this->notice($parent_uid, $template_id, $page, $form_id1, $content);
+            }
         } else {
-            $form_id1 = $m_user->where(['uid' => $tale_uid])->value('form_id');
-            $this->notice($tale_uid, $template_id, $page, $form_id1, $content);
+            if ($tale_uid != $uid) {
+                $form_id1 = $m_user->where(['uid' => $tale_uid])->value('form_id');
+                $this->notice($tale_uid, $template_id, $page, $form_id1, $content);
+            }
         }
     }
 
