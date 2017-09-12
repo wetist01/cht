@@ -26,7 +26,7 @@ class Tale extends Base
      * @param int $cache_time
      * @return mixed
      */
-    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $limit = 50, $cache_time = 3600)
+    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $limit = 40, $cache_time = 3600)
     {
         $key_redis = 'tale_list_' . substr(geohash_encode($long, $lat), 0, $near_error) . '_limit_' . $limit;
 

@@ -131,7 +131,7 @@ class Tale extends Base
     {
         if ($page == 1) {
             $model_tale = new \app\index\model\Tale();
-            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 30, 3600);//todo
+            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 30, 5);//todo
         } else {
             $tale_list = [];
         }
