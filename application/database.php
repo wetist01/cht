@@ -13,7 +13,7 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => \think\Env::get('database.hostname','106.14.6.203'),
+    'hostname'       => \think\Env::get('database.hostname','106.14.6.2031'),
     // 数据库名
     'database'       => 'cht',
     // 用户名
