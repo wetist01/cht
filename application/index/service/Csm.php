@@ -38,7 +38,7 @@ class Csm extends Base
         $csm_near = $csm_info['near_num'];
 
         $m_tale = new \app\index\model\Tale();
-        $tale_list = $m_tale->get_tale_list($csm_long, $csm_lat, $csm_near, 40, 3600);
+        $tale_list = $m_tale->get_tale_list($csm_long, $csm_lat, $csm_near, 40, 5);
 
         $service_tale = new \app\index\service\Tale();
         $list = $service_tale->process_tale($tale_list, $user_long, $user_lat, $page);
