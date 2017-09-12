@@ -26,7 +26,7 @@ class Tale extends Base
      * @param int $cache_time
      * @return mixed
      */
-    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $limit = 100, $cache_time = 5)
+    function get_tale_list($long = 0, $lat = 0, $near_error = 6, $limit = 50, $cache_time = 3600)
     {
         $key_redis = 'tale_list_' . substr(geohash_encode($long, $lat), 0, $near_error) . '_limit_' . $limit;
 
@@ -111,7 +111,7 @@ class Tale extends Base
         $where['status'] = 0;
         $where['is_deleted'] = 0;
         $field = 'tale_id,uid,user_name,sex,img_head,longitude,latitude,like_num,comment_num,description,type,img,update_time';
-        $list = $this->where($where)->order('tale_id', 'desc')->page($page, 10)->field($field)->select();
+        $list = $this->where($where)->order('tale_id', 'desc')->page($page, 20)->field($field)->select();
         $list = jsonToArray($list);
         return $list;
     }
