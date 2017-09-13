@@ -174,7 +174,7 @@ function getTimeDifference($time = 0)
         if ($d_value < 3600) {
             $result = $d_value / 60;
             if ($result < 60) {
-                $result = '刚刚发布';
+                $result = '1分钟前';
             } else {
                 $result = intval($result) . '分钟前';
             }

@@ -106,6 +106,7 @@ class Comment extends Base
 
         foreach ($result as $key => $val) {
             $result[$key]['distance'] = getDistance($data['longitude'], $data['latitude'], $val['longitude'], $val['latitude']);
+            $result[$key]['create_time'] = getTimeDifference($val['create_time']);
             if ($val['is_anon'] == 1) {
                 $result[$key]['user_name'] = '匿名';
                 $result[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
