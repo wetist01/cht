@@ -84,7 +84,7 @@ class Comment extends Base
             $where['is_deleted'] = 0;
             $comment_list = $this->where($where)->field('comment_id,is_anon,tale_id,uid,sex,user_name,img_head,content,create_time,longitude,latitude')->order('comment_id', 'desc')->page($page, 50)->select();
             $comment_list = json_decode(json_encode($comment_list), true);
-            Cache::tag('comment_list_tale_' . $tale_id)->set($key, $comment_list, 3600 * 24 * 7);
+            Cache::tag('comment_list_tale_' . $tale_id)->set($key, $comment_list, 3600 * 24);
             return $comment_list;
         }
     }
