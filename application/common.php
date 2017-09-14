@@ -173,7 +173,7 @@ function getTimeDifference($time = 0)
         $d_value = time() - $time;
         if ($d_value < 3600) {
             $result = $d_value / 60;
-            if ($result < 60) {
+            if ($result < 1) {
                 $result = '1分钟前';
             } else {
                 $result = intval($result) . '分钟前';

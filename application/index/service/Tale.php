@@ -34,8 +34,6 @@ class Tale extends Base
         $m_tale = new \app\index\model\Tale();
 
         if ($m_tale->allowField(true)->save($data)) {
-            $key_redis = 'tale_list_' . substr(geohash_encode($data['longitude'], $data['latitude']), 0, 6) . '_limit_' . 40;
-            Cache::rm($key_redis);
             data_format_json(0, '', '创建成功');
         } else {
             data_format_json(-1, '', '创建失败，请稍后重试');
@@ -102,7 +100,7 @@ class Tale extends Base
 
         if ($page == 1) {
             $model_tale = new \app\index\model\Tale();
-            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 40, 3600);
+            $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 40, 5);
             Cache::set($cache_key, $tale_list, 3600);
         } else {
             $tale_list_cache = Cache::get($cache_key);
