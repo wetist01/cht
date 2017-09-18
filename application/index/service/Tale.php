@@ -159,7 +159,7 @@ class Tale extends Base
 
                 if ($value['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
                     $tale_list[$key]['user_name'] = '匿名';
-                    $tale_list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
+                    $tale_list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
                 }
 
                 unset($tale_list[$key]['longitude']);
@@ -193,7 +193,7 @@ class Tale extends Base
 
             if ($info['is_anon'] == 1) {
                 $info['user_name'] = '匿名';
-                $info['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
+                $info['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
             }
 
             $info['distance'] = getDistance($data['longitude'], $data['latitude'], $info['longitude'], $info['latitude']);

@@ -109,7 +109,7 @@ class Comment extends Base
             $result[$key]['create_time'] = getTimeDifference($val['create_time']);
             if ($val['is_anon'] == 1) {
                 $result[$key]['user_name'] = '匿名';
-                $result[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
+                $result[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
             }
         }
 
@@ -145,7 +145,7 @@ class Comment extends Base
             foreach ($list as $key => $value) {
                 if ($list[$key]['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
                     $list[$key]['user_name'] = '匿名用户';
-                    $list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/20170907/43fe8ec6278c240c82376d6ddb9486b9.png';
+                    $list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
                 }
 
                 $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
