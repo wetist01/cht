@@ -85,7 +85,7 @@ class Tale extends Base
      */
     function change_anon_user_num($tale_id)
     {
-        $this->where('tale_id', $tale_id)->setDec('anon_comment_num');
+        $this->where('tale_id', $tale_id)->setInc('anon_comment_num');
     }
 
     /**
