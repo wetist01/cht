@@ -25,8 +25,32 @@ class Comment extends Base
         }
         $m_user = new \app\index\model\User();
         $user_info = $m_user->fetchWhere(['uid' => $data['uid']], 'user_name,sex,img_head', 1);
-        $data['user_name'] = $user_info['user_name'];
-        $data['img_head'] = $user_info['img_head'];
+
+        if ($data['is_anon'] == 0) {
+            $data['user_name'] = $user_info['user_name'];
+            $data['img_head'] = $user_info['img_head'];
+        } else {
+            $data['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
+
+            $m_comment = new \app\index\model\Comment();
+            $where['tale_id'] = $data['tale_id'];
+            $where['uid'] = $data['uid'];
+            $where['is_anon'] = 1;
+
+            $anon_name = $m_comment->where($where)->value('user_name');
+            if ($anon_name) {
+                $data['user_name'] = $anon_name;
+            } else {
+                $m_tale = new \app\index\model\Tale();
+                $anon_comment_num = $m_tale->where(['tale_id' => $data['tale_id']])->value('anon_comment_num');
+                if ($anon_comment_num) {
+                    $data['user_name'] = '匿名' . $anon_comment_num;
+                } else {
+                    $data['user_name'] = '匿名';
+                }
+                $m_tale->change_anon_user_num($data['tale_id']);
+            }
+        }
         $data['sex'] = $user_info['sex'];
 
         if ($data['comment_id'] == 0) {//创建一级评论
@@ -107,10 +131,7 @@ class Comment extends Base
         foreach ($result as $key => $val) {
             $result[$key]['distance'] = getDistance($data['longitude'], $data['latitude'], $val['longitude'], $val['latitude']);
             $result[$key]['create_time'] = getTimeDifference($val['create_time']);
-            if ($val['is_anon'] == 1) {
-                $result[$key]['user_name'] = '匿名';
-                $result[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
-            }
+            $result[$key]['is_anon'] = 0;
         }
 
         data_format_json(0, $result, 'success');
@@ -143,11 +164,6 @@ class Comment extends Base
 
         if ($list) {
             foreach ($list as $key => $value) {
-                if ($list[$key]['is_anon'] == 1) {//TODO 增加匿名用户的默认头像
-                    $list[$key]['user_name'] = '匿名用户';
-                    $list[$key]['img_head'] = 'http://img.chuanhuatong.cc/head/anon.jpg';
-                }
-
                 $list[$key]['latest_reply_time'] = getTimeDifference($value['create_time']);
             }
 

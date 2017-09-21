@@ -77,6 +77,17 @@ class Tale extends Base
         }
     }
 
+
+    /**
+     * 当有新匿名用户评论时anon_comment_num自增
+     * $author kongjian
+     * @param $tale_id
+     */
+    function change_anon_user_num($tale_id)
+    {
+        $this->where('tale_id', $tale_id)->setDec('anon_comment_num');
+    }
+
     /**
      * 改变like_num值
      * @author kongjian
