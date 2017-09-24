@@ -99,9 +99,11 @@ class Tale extends Base
     {
         if ($type == 1) {
             $this->where('tale_id', $tale_id)->setInc('like_num');
+            $this->update(['update_time' => time()], ['tale_id' => $tale_id]);
             $like_num = $this->where('tale_id', $tale_id)->value('like_num');
         } elseif ($type == 2) {
             $this->where('tale_id', $tale_id)->setDec('like_num');
+            $this->update(['update_time' => time()], ['tale_id' => $tale_id]);
             $like_num = $this->where('tale_id', $tale_id)->value('like_num');
         } else {
             $like_num = false;
