@@ -38,4 +38,15 @@ class Csm extends Base
 
         return $list;
     }
+
+    /**
+     * 金科比脸大赛
+     * @author kongjian
+     * @return mixed
+     */
+    function face_match()
+    {
+        $list = $this->query("select * from cht_tale where status = 0 and is_deleted = 1 and left(`description`,4) = '我要比脸' order by update_time DESC limit 50;");
+        return $list;
+    }
 }
