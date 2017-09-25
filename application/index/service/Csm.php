@@ -38,7 +38,7 @@ class Csm extends Base
             $tale_list = $m_csm->face_match();
             $top = $m_tale->get_top();
             if ($top) {
-                $tale_list = array_unshift($tale_list, $top);
+                array_unshift($tale_list, $top);
             }
         } else {
             $csm_info = $m_csm->fetchWhere(['csm_id' => $csm_id], '*', 1);

@@ -140,7 +140,7 @@ class Tale extends Base
         $where['is_deleted'] = 0;
         $where['top'] = 1;
         $field = '*';
-        $top = $this->fetchWhere($where, $field, 0, 1);
+        $top = $this->fetchWhere($where, $field, 1, 1);
         return $top;
     }
 }
