@@ -97,9 +97,9 @@ class Tale extends Base
     function get_tale_list_login($long, $lat, $near_error = 6, $page = 1, $uid, $token)
     {
         $cache_key = 'tale_list_login_' . $uid . '_' . $token;
+        $model_tale = new \app\index\model\Tale();
 
         if ($page == 1) {
-            $model_tale = new \app\index\model\Tale();
             $tale_list = $model_tale->get_tale_list($long, $lat, $near_error, 40, 5);
             Cache::set($cache_key, $tale_list, 3600);
         } else {
@@ -111,6 +111,10 @@ class Tale extends Base
             }
         }
 
+        $top = $model_tale->get_top();
+        if ($top) {
+            array_unshift($tale_list, $top);
+        }
         $tale_list = $this->process_tale($tale_list, $long, $lat, $page);
 
         return $tale_list;

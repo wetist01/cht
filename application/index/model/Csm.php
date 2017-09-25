@@ -51,7 +51,7 @@ class Csm extends Base
         if ($cache_list) {
             $list = $cache_list;
         } else {
-            $list = $this->query("select * from cht_tale where status = 0 and is_deleted = 1 and left(`description`,4) = '我要比脸' order by update_time DESC limit 50;");
+            $list = $this->query("select * from cht_tale where status = 0 and is_deleted = 0 and left(`description`,4) = '我要比脸' order by update_time DESC limit 50;");
             Cache::set($cache_key, $list, 5);
         }
         return $list;
