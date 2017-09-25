@@ -46,7 +46,14 @@ class Csm extends Base
      */
     function face_match()
     {
-        $list = $this->query("select * from cht_tale where status = 0 and is_deleted = 1 and left(`description`,4) = '我要比脸' order by update_time DESC limit 50;");
+        $cache_key = 'face_match';
+        $cache_list = Cache::get($cache_key);
+        if ($cache_list) {
+            $list = $cache_list;
+        } else {
+            $list = $this->query("select * from cht_tale where status = 0 and is_deleted = 1 and left(`description`,4) = '我要比脸' order by update_time DESC limit 50;");
+            Cache::set($cache_key, $list, 5);
+        }
         return $list;
     }
 }

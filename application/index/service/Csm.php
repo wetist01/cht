@@ -32,16 +32,20 @@ class Csm extends Base
     function csm_tale_list($csm_id, $user_long, $user_lat, $page)
     {
         $m_csm = new \app\index\model\Csm();
+        $m_tale = new \app\index\model\Tale();
 
         if ($csm_id == 14) {
             $tale_list = $m_csm->face_match();
+            $top = $m_tale->get_top();
+            if ($top) {
+                $tale_list = array_unshift($tale_list, $top);
+            }
         } else {
             $csm_info = $m_csm->fetchWhere(['csm_id' => $csm_id], '*', 1);
             $csm_long = $csm_info['longitude'];
             $csm_lat = $csm_info['latitude'];
             $csm_near = $csm_info['near_num'];
 
-            $m_tale = new \app\index\model\Tale();
             $tale_list = $m_tale->get_tale_list($csm_long, $csm_lat, $csm_near, 40, 5);
         }
 

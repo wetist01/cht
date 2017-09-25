@@ -128,4 +128,19 @@ class Tale extends Base
         $list = jsonToArray($list);
         return $list;
     }
+
+    /**
+     * 获取置顶
+     * @author kongjian
+     * @return array|false|\PDOStatement|string|\think\Collection|\think\Model
+     */
+    function get_top()
+    {
+        $where['status'] = 0;
+        $where['is_deleted'] = 0;
+        $where['top'] = 1;
+        $field = '*';
+        $top = $this->fetchWhere($where, $field, 0, 1);
+        return $top;
+    }
 }
