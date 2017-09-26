@@ -37,7 +37,7 @@ class Tale extends Base
         } else {
             $neighbors = getNeighbors($long, $lat, $near_error);
             if ($neighbors) {
-                $tale_list = $this->query("SELECT * FROM cht_tale WHERE is_deleted = 0 AND status = 0 AND left(geohash,$near_error) IN ($neighbors) ORDER BY update_time DESC limit $limit");
+                $tale_list = $this->query("SELECT * FROM cht_tale WHERE is_deleted = 0 AND status = 0 AND top = 0 AND left(geohash,$near_error) IN ($neighbors) ORDER BY update_time DESC limit $limit");
                 Cache::set($key_redis, $tale_list, $cache_time);
             } else {
                 $tale_list = [];
