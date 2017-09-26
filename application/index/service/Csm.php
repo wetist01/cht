@@ -36,7 +36,7 @@ class Csm extends Base
 
         if ($csm_id == 14) {
             $tale_list = $m_csm->face_match();
-            $top = $m_tale->get_top();
+            $top = $m_tale->get_top('1,3');
             if ($top) {
                 array_unshift($tale_list, $top);
             }

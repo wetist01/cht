@@ -134,11 +134,11 @@ class Tale extends Base
      * @author kongjian
      * @return array|false|\PDOStatement|string|\think\Collection|\think\Model
      */
-    function get_top()
+    function get_top($top)
     {
         $where['status'] = 0;
         $where['is_deleted'] = 0;
-        $where['top'] = 1;
+        $where['top'] = ['in', $top];
         $field = '*';
         $top = $this->fetchWhere($where, $field, 1, 1);
         return $top;

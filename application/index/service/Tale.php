@@ -111,7 +111,7 @@ class Tale extends Base
             }
         }
 
-        $top = $model_tale->get_top();
+        $top = $model_tale->get_top('1,2');
         if ($top) {
             array_unshift($tale_list, $top);
         }
