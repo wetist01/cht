@@ -1,9 +1,8 @@
 <?php
-
+//测试用，无需关注
 namespace app\index\controller;
 
 use think\Env;
-use think\Request;
 
 class Index extends Base
 {
@@ -30,13 +29,5 @@ class Index extends Base
         成立于2016年9月，注册地上海宝山，若在使用本产品的过程中有什么意见或建议请告知我们。
         联系电话：15651079118';
         return json($text);
-    }
-
-    function test()
-    {
-        $request = Request::instance();
-        $a = $request->param('a');
-        $b = $request->param('b');
-        data_format_json(geohash_encode($a, $b));
     }
 }
