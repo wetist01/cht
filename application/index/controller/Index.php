@@ -30,4 +30,13 @@ class Index extends Base
         联系电话：15651079118';
         return json($text);
     }
+
+    function test()
+    {
+        $a = 'aaaab';
+        $c = str_replace('b','c',$a);
+        echo $a,$c;
+//        echo strrchr($a, 'b');
+//        echo substr($a,-2);
+    }
 }
